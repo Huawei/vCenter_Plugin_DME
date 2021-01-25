@@ -1,0 +1,51 @@
+<clr-modal class="add-wizard-wrap" [(clrModalOpen)]="expandShow" [clrModalClosable]="false">
+  <div class="modal-body">
+    <div *ngIf="modalLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+    </div>
+    <div *ngIf="modalHandleLoading" class="loadingDiv">
+        <span>
+          {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+        </span>
+    </div>
+    <form clrForm>
+      <div *ngIf="isOperationErr" class="errorTips" readonly ><clr-icon shape="exclamation-circle" class="is-solid"></clr-icon>{{'errorMsg.expandError' | translate}}</div>
+      <clr-input-container style="height: 4rem;">
+        <label style="color: #9F9F9F;">{{'vmfs.expandSize' | translate}}</label>
+        <div clrInput style="float: left;position: relative;">
+          <input clrInput style="width: 70%;border-bottom: none" type="number" [(ngModel)]="expandForm.vo_add_capacity" name="vo_add_capacity" #number="ngModel"
+                 (blur)="expandOnblur();" min="0" required/>
+          <select class="capacity" (change)="expandForm.vo_add_capacity=null" [(ngModel)]="expandForm.capacityUnit" clrInput style="width: 30%;border: 1px solid #DDDDDD;position: absolute;bottom: 3px;"  name="capacityUnit" >
+            <option value="TB">TB</option>
+            <option value="GB">GB</option>
+          </select>
+          <clr-control-helper *ngIf="!expandErr" style="position: absolute">
+            <clr-icon shape="exclamation-circle" class="is-solid"></clr-icon>{{'vmfs.expandTips' | translate}}
+          </clr-control-helper>
+          <clr-control-helper *ngIf="expandErr">
+            <div class="errorTips" readonly >
+              <clr-icon shape="exclamation-circle" class="is-solid"></clr-icon>{{'vmfs.expandTips' | translate}}
+            </div>
+          </clr-control-helper>
+        </div>
+        <clr-control-error>{{'validations.required' | translate}}：{{'vmfs.expandTips' | translate}}</clr-control-error>
+      </clr-input-container>
+    </form >
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="cancel()">{{'menu.cancel' | translate}}</button>
+    <button type="button" class="btn btn-primary" (click)="expandHandleFunc();">{{'menu.ok' | translate}}</button>
+  </div>
+</clr-modal>
+<!--操作成功提示-->
+<clr-modal [(clrModalOpen)]="expandSuccessShow" [clrModalSize]="'sm'" [clrModalClosable]="false">
+  <h3 class="modal-title modelTile">{{'vmfs.reclaim.title' | translate}}</h3>
+  <div class="modal-body">
+    <p *ngIf="expandSuccessShow">{{'vmfs.expand.success' | translate}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" (click)="expandSuccessShow = false;confirmActResult();">{{'menu.ok' | translate}}</button>
+  </div>
+</clr-modal>

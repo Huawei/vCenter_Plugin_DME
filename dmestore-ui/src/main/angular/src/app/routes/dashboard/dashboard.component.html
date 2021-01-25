@@ -1,0 +1,245 @@
+<div class="clr-row over-top">
+  <div class="clr-col-3">
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-header-left">
+          <span class="card-title">DME</span>
+        </div>
+      </div>
+      <div class="info-card-content clr-row">
+        <div class="clr-col-2"></div>
+        <div class="clr-col-10">
+          <div class="info-charts-wrap">
+            <div class="info-content">
+              <div class="gh-info-item">
+                <span class="gh-info-lable">IP</span>
+                <span class="gh-info-value" *ngIf="hostModel.hostIp == '' || hostModel.hostIp == null">--</span>
+                <span class="gh-info-value" *ngIf="hostModel.hostIp != '' && hostModel.hostIp != null">{{hostModel.hostIp}}</span>
+              </div>
+              <div class="gh-info-item">
+                <span class="gh-info-lable">{{'overview.port' | translate}}</span>
+                <span class="gh-info-value" *ngIf="hostModel.hostPort == ''">--</span>
+                <span class="gh-info-value" *ngIf="hostModel.hostPort != ''">{{hostModel.hostPort}}</span>
+              </div>
+              <div class="gh-info-item">
+                <span class="gh-info-lable">{{'overview.status' | translate}}</span>
+                <span class="gh-info-value">
+                </span>
+                <span class="gh-info-value" *ngIf="hostModel.hostIp != '' && hostModel.hostIp != null && hostModel.code == '200'">
+                  <clr-icon shape="success-standard" class="is-solid" style="color: #59A220;margin-right: 5px;"></clr-icon>
+                  {{'overview.connected' | translate}}</span>
+                <span class="gh-info-value" *ngIf="hostModel.hostIp != '' && hostModel.hostIp != null && hostModel.code != '200'">
+                  <span class="gh-info-value" style="color: red">连接出错</span>
+                </span>
+                <span class="gh-info-value" *ngIf="(hostModel.hostIp == '' || hostModel.hostIp == null) && hostModel.code == '200'">
+                  <button type="button" (click)="showPop()" class="btn btn-icon" aria-label="home"><clr-icon shape="add"></clr-icon>
+                  </button>
+                </span>
+                <span class="gh-info-value" *ngIf="(hostModel.hostIp == '') && hostModel.code == ''">
+                  <span class="gh-info-value">--</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clr-col-4">
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-header-left">
+          <span class="card-title">{{'overview.storage' | translate}}</span>
+        </div>
+      </div>
+      <div class="info-card-content clr-row ds-chart">
+        <div class="clr-col-12">
+          <div class="info-charts-wrap">
+            <div echarts [options]="{}" (chartInit)= "storageNumChartInit($event)" style="width: 30%;height: 150px;margin-right: 20%;"></div>
+            <div class="info-content" style="cursor:pointer" (click)="toDatastoreDeviceViewSdk()">
+              <div class="info-content-text">
+                <span>{{'overview.total' | translate}}</span>
+                <span>{{storageNum.total}}</span>
+              </div>
+              <div class="info-content-text">
+                <span>{{'overview.normal' | translate}}</span>
+                <span>{{storageNum.normal}}</span>
+                <span class="squre normal"></span>
+              </div>
+              <div class="info-content-text">
+                <span>{{'overview.abnormal' | translate}}</span>
+                <span>{{storageNum.abnormal}}</span>
+                <span class="squre abnormal"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--  <div class="clr-col-5">-->
+<!--    <div class="info-card loading">-->
+<!--      <div class="info-card-header">-->
+<!--        <div class="info-header-left">-->
+<!--          <span class="card-title">{{'overview.violations' | translate}}</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="info-card-content bestprac" [hidden]="bestShowLoading">-->
+<!--        <div class="count-wrap clr-row">-->
+<!--          <div class="count-item clr-col-3">-->
+<!--            <div (click)="toBestParcticeViewSdk('critical')"  style="cursor:pointer" class="num">{{bestPracticeViolations.critical || 0}}</div>-->
+<!--            <div class="color-divide critical"></div>-->
+<!--            <div class="text">{{'overview.critical' | translate}}</div>-->
+<!--          </div>-->
+<!--          <div class="count-item clr-col-3">-->
+<!--            <div (click)="toBestParcticeViewSdk('major')" style="cursor:pointer" class="num">{{bestPracticeViolations.major || 0}}</div>-->
+<!--            <div class="color-divide major"></div>-->
+<!--            <div class="text">{{'overview.major' | translate}}</div>-->
+<!--          </div>-->
+<!--          <div class="count-item clr-col-3">-->
+<!--            <div (click)="toBestParcticeViewSdk('warning')" style="cursor:pointer" class="num">{{bestPracticeViolations.warning || 0}}</div>-->
+<!--            <div class="color-divide warning"></div>-->
+<!--            <div class="text">{{'overview.warning' | translate}}</div>-->
+<!--          </div>-->
+<!--          <div class="count-item clr-col-3">-->
+<!--            <div (click)="toBestParcticeViewSdk('info')" style="cursor:pointer" class="num">{{bestPracticeViolations.info || 0}}</div>-->
+<!--            <div class="color-divide info"></div>-->
+<!--            <div class="text">{{'overview.info' | translate}}</div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <img [hidden]="!bestShowLoading" src="./assets/images/loading.gif" >-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
+
+<div class="clr-row ds-wrap">
+  <div class="clr-col-12">
+    <div class="info-card">
+      <div class="ds-left">
+        <div class="info-card-header">
+          <div class="info-header-left">
+            <clr-dropdown [clrCloseMenuOnItemClick]="true">
+              <button clrDropdownTrigger class="dropdown-toggle  btn btn-link">
+                {{capadataStoreName}}
+                <clr-icon shape="caret down"></clr-icon>
+              </button>
+              <clr-dropdown-menu *clrIfOpen>
+                <div clrDropdownItem (click)="loadstorageCapacity('0', 'overview.allDataStore')">{{'overview.allDataStore' | translate}}</div>
+                <div clrDropdownItem (click)="loadstorageCapacity('1', 'overview.VMFS')">{{'overview.VMFS' | translate}}</div>
+                <div clrDropdownItem (click)="loadstorageCapacity('2', 'overview.NFS')">{{'overview.NFS' | translate}}</div>
+              </clr-dropdown-menu>
+            </clr-dropdown>
+          </div>
+        </div>
+        <div class="info-card-content clr-row ds-chart">
+          <div class="clr-col-12">
+            <div class="info-charts-wrap">
+              <div echarts [options]="{}" (chartInit)="storageCapacityChartInit($event)" style="width: 30%;height: 150px;margin-right: 10%;"></div>
+              <div class="info-content">
+                <div class="info-content-text">
+                  <span>{{'overview.totalCapacity' | translate}}</span>
+                  <span>{{storageCapacity.totalCapacity}} {{storageCapacity.capacityUnit}}</span>
+                </div>
+                <div class="info-content-text">
+                  <span>{{'overview.used' | translate}}</span>
+                  <span>{{storageCapacity.usedCapacity}} {{storageCapacity.capacityUnit}}</span>
+                  <span class="squre used"></span>
+                </div>
+                <div class="info-content-text">
+                  <span>{{'overview.free' | translate}}</span>
+                  <span>{{storageCapacity.freeCapacity}} {{storageCapacity.capacityUnit}}</span>
+                  <span class="squre free"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ds-right">
+        <div class="info-card-header">
+          <div class="info-header-left">
+            <!--  -->
+            <clr-dropdown [clrCloseMenuOnItemClick]="true">
+              <button clrDropdownTrigger class="dropdown-toggle  btn btn-link" style="margin-right: 10px">
+                {{top5dataStoreName}}
+                <clr-icon shape="caret down"></clr-icon>
+              </button>
+              <clr-dropdown-menu *clrIfOpen>
+                <div clrDropdownItem (click)="loadTop5DataStore('0', 'overview.allDataStore')">{{'overview.allDataStore' | translate}}</div>
+                <div clrDropdownItem (click)="loadTop5DataStore('1', 'overview.VMFS')">{{'overview.VMFS' | translate}}</div>
+                <div clrDropdownItem (click)="loadTop5DataStore('2', 'overview.NFS')">{{'overview.NFS' | translate}}</div>
+              </clr-dropdown-menu>
+            </clr-dropdown>
+            <div>{{'overview.top5T' | translate}}</div>
+          </div>
+        </div>
+        <div class="info-card-content clr-row loading">
+          <div class="clr-col-12" [hidden]="top5ShowLoading">
+            <div class="progress-container" *ngFor="let item of storeageTopN" [clrDgItem]="item">
+              <div class="progress-item">
+                <div class="progress-label" title="{{item.name}}">{{item.name}}</div>
+                <div class="progress-default">
+                  <div class="progress-inner" [ngStyle]="{'width':(item.utilization)+'%'}" [ngClass]="{'warning': (item.utilization) >= 70}"></div>
+                </div>
+                <div class="progress-text">
+                  <span class="percent">{{item.utilization}}% </span>
+                  <span class="unit">({{item.usedCapacity}}/{{item.totalCapacity}} {{item.capacityUnit}})</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <img [hidden]="!top5ShowLoading" src="./assets/images/loading.gif" >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<clr-modal [(clrModalOpen)]="popShow">
+  <h3 class="modal-title">{{'overview.connectT' | translate}}</h3>
+  <div class="modal-body">
+    <form clrForm [formGroup]="connectForm">
+      <clr-input-container>
+        <label>IP</label>
+        <input clrInput formControlName="ip" type="text" [(ngModel)]="connectModel.hostIp" name="ip" />
+      </clr-input-container>
+      <clr-input-container>
+        <label>{{'overview.port' | translate}}</label>
+        <input clrInput formControlName="port" type="text" placeholder="{{'overview.portholder'|translate}}" [(ngModel)]="connectModel.port" name="port" />
+      </clr-input-container>
+      <clr-input-container>
+        <label>{{'overview.user' | translate}}</label>
+        <input clrInput formControlName="username" type="text" [(ngModel)]="connectModel.userName" name="username" />
+      </clr-input-container>
+      <clr-password-container>
+        <label>{{'overview.password' | translate}}</label>
+        <input clrPassword formControlName="password" name="password" [(ngModel)]="connectModel.password" />
+      </clr-password-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="popShow=false">{{'menu.cancel' | translate}}</button>
+    <button type="button" class="btn btn-primary" (click)="submit()">{{'menu.submit' | translate}}</button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="connectAlertSuccess" [clrModalSize]="'sm'" style="height: 100px;">
+  <h3 class="modal-title">{{'menu.tip'|translate}}</h3>
+  <div class="modal-body">
+    <clr-icon shape="success-standard" class="is-solid" style="color: #59A220;margin-right: 5px;"></clr-icon>{{'overview.connectSuccess'|translate}}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="connectAlertSuccess=false">{{'menu.ok'|translate}}</button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="connectAlertFail" [clrModalSize]="'sm'">
+  <h3 class="modal-title">{{'menu.tip'|translate}}</h3>
+  <div class="modal-body">
+    <clr-icon shape="error-standard" class="is-solid" style="color: red;margin-right: 5px;"></clr-icon>{{'overview.connectFail'|translate}}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="connectAlertFail=false">{{'menu.ok'|translate}}</button>
+  </div>
+</clr-modal>

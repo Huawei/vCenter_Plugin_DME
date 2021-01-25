@@ -1,0 +1,117 @@
+<div style="height: 100%;">
+  <!-- 头部按钮组 -->
+  <div>
+    <button class="btn btn-primary" [disabled]="rowSelected.length === 0" (click)="applyClick('1')">{{'bestPractice.apply'|translate}}</button>
+    <button class="btn btn-primary" (click)="recheck()">{{'bestPractice.check'|translate}}</button>
+  </div>
+  <!-- 列表页 -->
+  <clr-datagrid [(clrDgSelected)]="rowSelected" [clrDgLoading]="isLoading">
+
+    <clr-dg-column [clrDgField]="'hostSetting'">{{'bestPractice.hostSetting'|translate}}</clr-dg-column>
+    <clr-dg-column [clrDgField]="'recommendValue'">{{'bestPractice.recommend'|translate}}</clr-dg-column>
+    <clr-dg-column [clrDgField]="'levelDesc'">{{'bestPractice.level'|translate}}</clr-dg-column>
+    <clr-dg-column [clrDgField]="'violation'" [clrDgSortOrder]="'violation'">{{'bestPractice.violation'|translate}}</clr-dg-column>
+
+    <clr-dg-row *clrDgItems="let item of list" [clrDgItem]="item">
+      <clr-dg-cell>{{item.hostSetting}}</clr-dg-cell>
+      <clr-dg-cell>{{item.recommendValue}}</clr-dg-cell>
+      <clr-dg-cell>
+        <span [hidden]="item.level != 'Critical'">
+          <span class="color-square" style="background-color: #CA2200; margin-right: 10px"></span>{{item.levelDesc}}
+        </span>
+        <span [hidden]="item.level != 'Major'">
+          <span class="color-square" style="background-color: #F0C004; margin-right: 10px"></span>{{item.levelDesc}}
+        </span>
+        <span [hidden]="item.level != 'Warning'">
+          <span class="color-square" style="background-color: #FEE273; margin-right: 10px"></span>{{item.levelDesc}}
+        </span>
+        <span [hidden]="item.level != 'Info'">
+          <span class="color-square" style="background-color: #79C6E6; margin-right: 10px"></span>{{item.levelDesc}}
+        </span>
+      </clr-dg-cell>
+      <clr-dg-cell><span (click)="openHostList(item)" style="color:#00F;cursor:pointer">{{item.count}}</span></clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer>
+      <clr-dg-pagination #pagination [clrDgPageSize]="5" [clrDgTotalItems]="total">
+        <clr-dg-page-size [clrPageSizeOptions]="[5,10,50,100]">{{'page.perPage' | translate}}</clr-dg-page-size>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+        {{'page.all' | translate}}
+        {{pagination.totalItems}}
+      </clr-dg-pagination>
+    </clr-dg-footer>
+
+
+  </clr-datagrid>
+
+  <!-- 弹出框 -->
+  <clr-modal [(clrModalOpen)]="hostModalShow" style="Width: 576px; height: 300px">
+    <h3 class="modal-title">{{'bestPractice.non-compliant'|translate}}</h3>
+    <div class="modal-body">
+      <div>
+        <button class="btn btn-primary" [disabled]="hostSelected.length === 0" (click)="applyClick('2')">{{'bestPractice.apply'|translate}}</button>
+      </div>
+      <!-- 列表页 -->
+      <clr-datagrid [(clrDgSelected)]="hostSelected"  (clrDgRefresh)="hostRefresh()" [clrDgLoading]="hostIsLoading">
+
+        <clr-dg-column [clrDgField]="'hostName'">{{'bestPractice.host'|translate}}</clr-dg-column>
+        <clr-dg-column [clrDgField]="'actualValue'">{{'bestPractice.actual'|translate}}</clr-dg-column>
+        <clr-dg-column [clrDgField]="'recommendValue'">{{'bestPractice.recommend'|translate}}</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let item of hostList" [clrDgItem]="item">
+          <clr-dg-cell>{{item.hostName}}</clr-dg-cell>
+          <clr-dg-cell>{{item.actualValue}}</clr-dg-cell>
+          <clr-dg-cell>{{item.recommendValue}}</clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>
+          <clr-dg-pagination #pagination [clrDgPageSize]="5" [clrDgTotalItems]="hostTotal">
+            <clr-dg-page-size [clrPageSizeOptions]="[5,10,50,100]">{{'page.perPage' | translate}}</clr-dg-page-size>
+            {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+            {{'page.all' | translate}}
+            {{pagination.totalItems}}
+          </clr-dg-pagination>
+        </clr-dg-footer>
+
+      </clr-datagrid>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="hostModalShow = false">{{'menu.close'|translate}}</button>
+    </div>
+  </clr-modal>
+
+
+  <div class="loadingDiv" [hidden]="!applyLoading"><clr-spinner class="spinner spinner-md">Loading</clr-spinner></div>
+  <div class="loadingDiv" [hidden]="!checkLoading"><clr-spinner class="spinner spinner-md">Loading</clr-spinner></div>
+</div>
+
+
+<clr-modal [(clrModalOpen)]="tipModal" [clrModalSize]="'sm'">
+  <h3 class="modal-title">{{'menu.tip'|translate}}</h3>
+  <div class="modal-body">
+    <p>{{'bestPractice.tipmessage'|translate}} {{ips}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-warning" (click)="tipOk()">{{'menu.ok'|translate}}</button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="tipModalSuccess" [clrModalSize]="'sm'">
+    <h3 class="modal-title">{{'menu.tip'|translate}}</h3>
+    <div class="modal-body">
+      <clr-icon shape="success-standard" class="is-solid" style="color: #59A220;margin-right: 5px;"></clr-icon>{{'bestPractice.exeSuccess'|translate}}
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="tipModalSuccess=false">{{'menu.ok'|translate}}</button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="tipModalFail" [clrModalSize]="'sm'">
+  <h3 class="modal-title">{{'menu.tip'|translate}}</h3>
+  <div class="modal-body">
+    <clr-icon shape="error-standard" class="is-solid" style="color: red;margin-right: 5px;"></clr-icon>{{'bestPractice.exeFail'|translate}}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="tipModalFail=false">{{'menu.ok'|translate}}</button>
+  </div>
+</clr-modal>

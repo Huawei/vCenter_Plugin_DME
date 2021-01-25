@@ -1,0 +1,46 @@
+.modelTile{
+  line-height: 3rem;
+  border-bottom: 1px solid #DDDDDD;
+  font-weight: normal;
+}
+.errorTips{
+  border: none;
+  color: red;
+}
+.add-wizard-wrap ::ng-deep .modal-backdrop{
+  display: none;
+}
+.add-wizard-wrap ::ng-deep .modal{
+  padding: 0;
+  position: initial;
+}
+::ng-deep .add-wizard-wrap .modal-dialog {
+  height: 100vh;
+  max-height: none;
+  width: 100%;
+}
+
+.loadingDiv {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 100000;
+  left: 0;
+  top: 0;
+  background: rgba(0,0,0,0.3);
+}
+.loadingDiv span{
+  display: inline-block;
+  text-align: center;
+  top: 15%;
+  vertical-align: middle;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  font-size: .8rem;
+  color: white;
+  font-weight: bolder;
+}
+::ng-deep .modal-dialog .modal-content{
+  box-shadow: none;
+}

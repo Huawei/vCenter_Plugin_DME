@@ -1,0 +1,90 @@
+/*
+ * EXTERNAL ICONS SUPPORT: plugin-icons.css contain "external" icons, i.e. the ones
+ * displayed outside plugin's views, in the main app menus, shortcuts or object lists.
+ * Do not include other CSS rules here!
+ *
+ * Css name format must be ".bundleName-iconKey", where bundleName is the
+ * defaultBundle and iconKey the resource key used in plugin.xml:
+ *
+ *   <plugin id="..." defaultBundle="bundleName">
+ *    ...
+ *      <icon>#{iconKey}</icon>
+ *
+ * The same iconKey is defined in the .properties file used to compile Flex resources:
+ *   iconKey = Embed("../../assets/images/someIcon.png")
+ *
+ * Follow the SDK doc or other samples for the correct attributes based on the type of icon.
+ */
+
+.com_huawei_dmestore-plugin-icons {
+    background: url("../images/huaweilogo.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin: 1px 4px 0;
+}
+
+.com_huawei_dmestore-menu-icons {
+    background: url("../images/huaweimenu.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin: 1px 4px 0;
+}
+
+.com_huawei_dmestore-overview-icons {
+    background: url("../images/overviewlogo.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin: 1px 4px 0;
+}
+
+.com_huawei_dmestore-storage-icons {
+    background: url("../images/storagedevicelogo.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin: 1px 4px 0;
+}
+
+.com_huawei_dmestore-vmfsdatastore-icons {
+    background: url("../images/vmfsdatastorelogo.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin: 1px 4px 0;
+}
+
+.com_huawei_dmestore-nfsdatastore-icons {
+    background: url("../images/nfsdatastorelogo.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin: 1px 4px 0;
+}
+
+.com_huawei_dmestore-servicelevel-icons {
+    background: url("../images/servicelevellogo.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin: 1px 4px 0;
+}
+
+.com_huawei_dmestore-bestpractice-icons {
+    background: url("../images/bestpracticelogo.png");
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin: 1px 4px 0;
+}
+

@@ -1,0 +1,25 @@
+<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+ <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+
+ <title>selected02</title>
+ <desc>Created with Sketch.</desc>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g transform="rotate(88.57057189941406 15,15.000000000000002) " fill-rule="evenodd" fill="none" id="Page-1">
+   <g fill="#5b7ede" id="create-file_selected-copy">
+    <g id="服务等级">
+     <g id="Large-Scale-ERP@HANA">
+      <g id="selected02">
+       <path id="Rectangle" d="m0,0l25,0c2.76142,0 5,2.23858 5,5l0,25l-30,-30z"/>
+       <circle r="3" cy="9" cx="22" stroke-width="2" stroke="#FFFEFE" id="Oval"/>
+      </g>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

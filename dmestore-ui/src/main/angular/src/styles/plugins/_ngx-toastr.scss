@@ -1,0 +1,36 @@
+
+.toast-container {
+  .toast-success,
+  .toast-info,
+  .toast-warning,
+  .toast-error {
+    padding-left: 50px;
+    color: #fff;
+  }
+
+  .toast-info {
+    background-color: mat-color($mat-blue, 500);
+  }
+
+  .toast-success {
+    background-color: mat-color($mat-green, 500);
+  }
+
+  .toast-warning {
+    background-color: mat-color($mat-orange, 500);
+  }
+
+  .toast-error {
+    background-color: mat-color($mat-red, 500);
+  }
+
+  .toast-close-button {
+    font-size: inherit;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .25);
+
+    &:hover {
+      color: inherit;
+      opacity: .6;
+    }
+  }
+}

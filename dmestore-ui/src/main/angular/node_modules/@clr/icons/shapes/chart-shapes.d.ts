@@ -1,0 +1,14 @@
+export declare const ClrShapeAxisChart: string;
+export declare const ClrShapeBarChart: string;
+export declare const ClrShapeBoxPlot: string;
+export declare const ClrShapeBubbleChart: string;
+export declare const ClrShapeCloudChart: string;
+export declare const ClrShapeCurveChart: string;
+export declare const ClrShapeGridChart: string;
+export declare const ClrShapeHeatMap: string;
+export declare const ClrShapeLineChart: string;
+export declare const ClrShapePieChart: string;
+export declare const ClrShapeScatterPlot: string;
+export declare const ClrShapeTickChart: string;
+export declare const ClrShapeBellCurve: string;
+export declare const ChartShapes: any;

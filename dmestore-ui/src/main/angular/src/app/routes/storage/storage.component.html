@@ -1,0 +1,234 @@
+<div style="background-color: #F0F2F5;height: 100%;width: 100%;border: 1px #F0F2F5 solid;">
+  <!--<h4 style="margin-left: 2%;margin-top: 1%;width: 5%">{{'storage.storage' | translate}}</h4>-->
+  <!--<div class="gh-btngroup-header" style="margin-bottom: 1%">-->
+    <!--<div class="gh-btngroup-left"></div>-->
+    <!--&lt;!&ndash; 基本视图、性能视图、刷新 &ndash;&gt;-->
+    <!--<div class="btn-group btn-icon">-->
+      <!--<div class="radio btn">-->
+        <!--<input (click)="buttonTrigger = 'list'" type="radio" name="btn-group-buttonTrigger-radios" id="buttonTrigger-1" checked>-->
+        <!--<label for="buttonTrigger-1"><clr-icon shape="view-list" size="20"></clr-icon></label>-->
+      <!--</div>-->
+      <!--<div class="radio btn">-->
+        <!--<input (click)="buttonTrigger = 'chart'" type="radio" name="btn-group-buttonTrigger-radios" id="buttonTrigger-2">-->
+        <!--<label for="buttonTrigger-2"><clr-icon shape="view-cards" size="20"></clr-icon></label>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <div style="background-color: #FFFFFF;height: 85%;width:98%;margin: auto">
+    <div style="margin-left: 2%;margin-right: 2%">
+      <div *ngIf="buttonTrigger==='list'" style="padding-top: 1%">
+        <!-- 头部按钮组 -->
+        <div class="gh-btngroup-header">
+          <div class="gh-btngroup-left"></div>
+          <!-- 基本视图、性能视图、刷新 -->
+          <div class="btn-group btn-icon">
+            <div class="radio btn" title="{{'menu.conventional' | translate}}">
+              <input (click)="radioCheck = 'table1'" type="radio" name="btn-group-demo-radios" id="btn-demo-radio-1" checked>
+              <label for="btn-demo-radio-1"><clr-icon shape="list" size="20"></clr-icon></label>
+            </div>
+            <div class="radio btn" title="{{'menu.capacity' | translate}}">
+              <input (click)="radioCheck = 'table2'" type="radio" name="btn-group-demo-radios" id="btn-demo-radio-2">
+              <label for="btn-demo-radio-2"><clr-icon shape="dashboard" size="20"></clr-icon></label>
+            </div>
+            <div class="radio btn" title="{{'menu.performance' | translate}}">
+              <input (click)="radioCheck = 'table3'" type="radio" name="btn-group-demo-radios" id="btn-demo-radio-3">
+              <label for="btn-demo-radio-3"><clr-icon shape="radar" size="15"></clr-icon></label>
+            </div>
+            <div class="radio btn merginLeft" title="{{'menu.refresh' | translate}}">
+              <label><clr-icon shape="refresh" size="20" (click)="scanData()"></clr-icon></label>
+            </div>
+          </div>
+        </div>
+        <!-- 列表页 -->
+        <clr-datagrid [clrDgLoading]="isLoading">
+          <clr-dg-column [clrDgField]="'name'" style="color: red">{{'storage.list.name' | translate}}</clr-dg-column>
+          <clr-dg-column [clrDgField]="'ip'">{{'storage.list.ipAddress' | translate}}</clr-dg-column>
+
+          <clr-dg-column [hidden]="radioCheck!=='table1'">
+            {{'storage.list.status' | translate}}
+            <clr-dg-filter [clrDgFilter]="storageStatusFilter">
+              <storage-status-filter #storageStatusFilter></storage-status-filter>
+            </clr-dg-filter>
+          </clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table1'">{{'storage.list.vendor' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table1'" [clrDgField]="'model'">
+            {{'storage.list.model' | translate}}
+          </clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table1'">{{'storage.list.version' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table1'">{{'storage.list.patchVersion' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table1'">{{'storage.list.location' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table1'">{{'storage.list.zone' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table1'">{{'storage.list.wp' | translate}}</clr-dg-column>
+
+          <clr-dg-column [hidden]="radioCheck!=='table2'">{{'storage.list.rawCap' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table2'">{{'storage.list.tec' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table2'">{{'storage.list.totalCap' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table2'">{{'storage.list.usedCap' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table2'">{{'storage.list.capUsage' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table2'">{{'storage.list.freeCap' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table2'">{{'storage.list.supRate' | translate}}</clr-dg-column>
+
+          <clr-dg-column [hidden]="radioCheck!=='table3'">{{'storage.list.cpuUtilization' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table3'">{{'storage.list.latency' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table3'">{{'storage.list.iops' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table3'">{{'storage.list.ops' | translate}}</clr-dg-column>
+          <clr-dg-column [hidden]="radioCheck!=='table3'">{{'storage.list.bandwidth' | translate}}</clr-dg-column>
+
+          <clr-dg-row *clrDgItems="let item of list" [clrDgItem]="item">
+            <clr-dg-cell><span (click)="toDetailView(item.id,item.name)" style="color:#829DE6;cursor:pointer">{{item.name}}</span></clr-dg-cell>
+            <clr-dg-cell>{{item.ip}}</clr-dg-cell>
+
+            <clr-dg-cell [hidden]="radioCheck!=='table1'">
+
+              <span *ngIf="item.status == 0">
+                <span class="color-square" style="background-color: #A9A9A9; margin-right: 10px"></span>
+                <span>{{'storage.list.offLine' | translate}}</span>
+              </span>
+              <span *ngIf="item.status == 1">
+                <span class="color-square" style="background-color: #7CDFA0; margin-right: 10px;"></span>
+                <span>{{'storage.list.normal' | translate}}</span>
+              </span>
+              <span *ngIf="item.status == 2">
+                <span class="color-square" style="background-color: red; margin-right: 10px"></span>
+                <span>{{'storage.list.fault' | translate}}</span>
+              </span>
+              <span *ngIf="item.status == 9">
+                <span class="color-square" style="background-color: yellow; margin-right: 10px"></span>
+                <span>{{'storage.list.notMgr' | translate}}</span>
+              </span>
+              <span *ngIf="!item.status">
+                <span class="color-square" style="background-color: #A9A9A9; margin-right: 10px"></span>
+                <span>--</span>
+              </span>
+              <br/>
+              <span *ngIf="item.synStatus == 0">
+                <span class="color-square" style="background-color: #A9A9A9; margin-right: 10px"></span>
+                <span>{{'storage.list.notSync' | translate}}</span>
+              </span>
+              <span *ngIf="item.synStatus == 1">
+                <span class="color-square" style="background-color: #00BFFF; margin-right: 10px"></span>
+                <span>{{'storage.list.inSync' | translate}}</span>
+              </span>
+              <span *ngIf="item.synStatus == 2">
+                <span class="color-square" style="background-color: #7CDFA0; margin-right: 10px"></span>
+                <span>{{'storage.list.synced' | translate}}</span>
+              </span>
+              <span *ngIf="!item.synStatus">
+                <span class="color-square" style="background-color: #A9A9A9; margin-right: 10px"></span>
+                <span>--</span>
+              </span>
+            </clr-dg-cell>
+
+            <clr-dg-cell [hidden]="radioCheck!=='table1'">{{item.vendor}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table1'">{{item.model}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table1'">{{item.version}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table1'">{{item.patchVersion}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table1'">{{item.location}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table1'">{{item.azIds || '--'}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table1'">{{item.maintenanceStart}}-{{item.maintenanceOvertime}}</clr-dg-cell>
+
+            <clr-dg-cell [hidden]="radioCheck!=='table2'">{{formatCapacity(item.totalCapacity)}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table2'">{{formatCapacity(item.totalEffectiveCapacity)}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table2'">{{formatCapacity(item.totalPoolCapacity)}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table2'">{{formatCapacity(item.usedCapacity)}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table2'">
+              <clr-progress-bar clrValue="{{(item.usedCapacity/item.totalPoolCapacity * 100).toFixed(2)}}" clrSuccess clrLabeled></clr-progress-bar>
+            </clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table2'">{{formatCapacity(item.totalPoolCapacity-item.usedCapacity)}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table2'">{{(item.subscriptionCapacity/item.totalPoolCapacity * 100).toFixed(3)}} %</clr-dg-cell>
+
+            <clr-dg-cell [hidden]="radioCheck!=='table3'">{{item.maxCpuUtilization}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table3'">{{item.maxLatency}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table3'">{{item.maxIops}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table3'">{{item.maxOps}}</clr-dg-cell>
+            <clr-dg-cell [hidden]="radioCheck!=='table3'">{{item.maxBandwidth}}</clr-dg-cell>
+          </clr-dg-row>
+          <clr-dg-footer>
+            <clr-dg-pagination #pagination [clrDgPageSize]="5" [clrDgTotalItems]="total">
+              <clr-dg-page-size [clrPageSizeOptions]="[5,10,50,100]">{{'page.perPage' | translate}}</clr-dg-page-size>
+              {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+              {{'page.all' | translate}} {{pagination.totalItems}}
+            </clr-dg-pagination>
+          </clr-dg-footer>
+        </clr-datagrid>
+      </div>
+      <!--<div [hidden]="buttonTrigger!=='chart'" style="width: 100%">-->
+        <!--<div class="clr-row"  style="margin:auto;width: 98%" >-->
+          <!--<div class="clr-col-6" *clrDgItems="let item of strorageCharts" style="margin-top: 1%">-->
+            <!--<div class="info-card" style="margin-bottom: 2%" (click)="toDetailView(item.id)">-->
+              <!--<div class="info-card-header border-header">-->
+                <!--<div class="info-header-left">-->
+                  <!--<clr-icon size="36" shape="network-switch"></clr-icon>-->
+                  <!--<div class="info-header-content">-->
+                    <!--<div class="title">{{item.name}}</div>-->
+                    <!--<div class="text">-->
+                      <!--<span>{{item.ip}}</span>-->
+                      <!--<span><clr-icon shape="display" class="is-solid is-highlight"></clr-icon></span>-->
+                      <!--<span class="header-divide"></span>-->
+                      <!--<span>5300 V5</span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<clr-dropdown [clrCloseMenuOnItemClick]="false">&ndash;&gt;-->
+                <!--&lt;!&ndash;<button clrDropdownTrigger class="dropdown-toggle  btn btn-link">&ndash;&gt;-->
+                <!--&lt;!&ndash;Operation&ndash;&gt;-->
+                <!--&lt;!&ndash;<clr-icon shape="caret down"></clr-icon>&ndash;&gt;-->
+                <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                <!--&lt;!&ndash;<clr-dropdown-menu *clrIfOpen>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div clrDropdownItem>Link 1</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div clrDropdownItem>Link 2</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</clr-dropdown-menu>&ndash;&gt;-->
+                <!--&lt;!&ndash;</clr-dropdown>&ndash;&gt;-->
+              <!--</div>-->
+              <!--<div class="info-card-content clr-row">-->
+                <!--<div class="clr-col-6">-->
+                  <!--<div class="info-content-title">{{'storage.chart.capacity' | translate}}</div>-->
+                  <!--<div class="info-charts-wrap">-->
+                    <!--<div echarts [options]="item.chart" id="chart3" style="width: 30%;height: 120px;"></div>-->
+                    <!--<div class="info-content">-->
+                      <!--<div class="info-content-text">-->
+                        <!--<span>{{'storage.chart.total' | translate}}</span>-->
+                        <!--<span>{{item.capacity}}</span>-->
+                      <!--</div>-->
+                      <!--<div class="info-content-text">-->
+                        <!--<span>{{'storage.chart.used' | translate}}</span>-->
+                        <!--<span>{{item.usedCapacity}}</span>-->
+                        <!--<span class="squre used"></span>-->
+                      <!--</div>-->
+                      <!--<div class="info-content-text">-->
+                        <!--<span>{{'storage.chart.free' | translate}}</span>-->
+                        <!--<span>{{item.freeCapacity}}</span>-->
+                        <!--<span class="squre free"></span>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="info-content-title">{{'storage.chart.health' | translate}}</div>-->
+                  <!--<div class="info-content-bottom">-->
+                    <!--<div class="info-bottom-box">-->
+                      <!--<div class="num">{{item.alarms}}</div>-->
+                      <!--<div class="bottom-label">{{'storage.chart.alarms' | translate}}</div>-->
+                    <!--</div>-->
+                    <!--<div class="info-bottom-box">-->
+                      <!--<div class="num">{{item.events}}</div>-->
+                      <!--<div class="bottom-label">{{'storage.chart.events' | translate}}</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="clr-col-6">-->
+                  <!--<div class="info-content-title" style="margin-bottom: 20px;">{{'storage.chart.performance' | translate}}</div>-->
+                  <!--<div class="info-content-title">{{'storage.chart.iops' | translate}}</div>-->
+                  <!--<div echarts [options]="item.iops" id="chart4" style="width: 100%;height: 100px;"></div>-->
+                  <!--<div class="info-content-title">{{'storage.chart.bandwidth' | translate}}</div>-->
+                  <!--<div echarts [options]="item.bandwidth" id="chart5" style="width: 100%;height: 100px;"></div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    </div>
+  </div>
+</div>
+
+
+

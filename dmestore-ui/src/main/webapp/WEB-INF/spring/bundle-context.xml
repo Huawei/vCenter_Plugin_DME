@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:osgi="http://www.springframework.org/schema/osgi"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="
+      http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/osgi
+      http://www.springframework.org/schema/osgi/spring-osgi.xsd
+      http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+   <!-- DO NOT CHANGE this section, it enables Spring MVC @Controller programming model -->
+
+   <mvc:annotation-driven />
+   <context:annotation-config/>
+
+   <!-- Standard controller beans: you can modify them if necessary -->
+   <bean name="vmfsAccessController" class="com.huawei.dmestore.mvc.VmfsAccessController" />
+
+   <bean name="nfsAccessController" class="com.huawei.dmestore.mvc.NfsAccessController" />
+
+   <bean name="dmeAccessController" class="com.huawei.dmestore.mvc.DmeAccessController" />
+
+   <bean name="pluginRegisterController" class="com.huawei.dmestore.mvc.PluginRegisterController" />
+
+   <bean name="bestPracticeController" class="com.huawei.dmestore.mvc.BestPracticeController" />
+
+   <bean name="dataStoreStatisticHistoryController" class="com.huawei.dmestore.mvc.DataStoreStatisticHistoryController" />
+
+   <bean name="dmeRelationInstanceController" class="com.huawei.dmestore.mvc.DmeRelationInstanceController" />
+
+   <bean name="dmeStorageController" class="com.huawei.dmestore.mvc.DmeStorageController" />
+
+   <bean name="hostAccessController" class="com.huawei.dmestore.mvc.HostAccessController" />
+
+   <bean name="nfsDataStoreController" class="com.huawei.dmestore.mvc.NfsDataStoreController" />
+
+   <bean name="nfsOperationController" class="com.huawei.dmestore.mvc.NfsOperationController" />
+
+   <bean name="overviewController" class="com.huawei.dmestore.mvc.OverviewController" />
+
+   <bean name="serviceLevelController" class="com.huawei.dmestore.mvc.ServiceLevelController" />
+
+   <bean name="vmfsOperationController" class="com.huawei.dmestore.mvc.VmfsOperationController" />
+
+   <bean name="vmRdmController" class="com.huawei.dmestore.mvc.VmRdmController" />
+
+   <bean name="vmwareAccessController" class="com.huawei.dmestore.mvc.VmwareAccessController" />
+
+   <!-- OSGI references to platform services used by the controllers -->
+
+   <osgi:reference id="dmeAccessService"
+                   interface="com.huawei.dmestore.services.DmeAccessService" />
+
+   <osgi:reference id="systemService"
+                   interface="com.huawei.dmestore.services.SystemService" />
+
+   <osgi:reference id="dmeNFSAccessService"
+                   interface="com.huawei.dmestore.services.DmeNFSAccessService" />
+
+   <osgi:reference id="vmfsAccessService"
+                   interface="com.huawei.dmestore.services.VmfsAccessService" />
+
+   <osgi:reference id="pluginRegisterService"
+                   interface="com.huawei.dmestore.services.PluginRegisterService" />
+
+   <osgi:reference id="vCenterInfoService"
+                   interface="com.huawei.dmestore.services.VCenterInfoService" />
+
+   <osgi:reference id="bestPracticeProcessService"
+                   interface="com.huawei.dmestore.services.BestPracticeProcessService" />
+
+   <osgi:reference id="dataStoreStatisticHistoryService"
+                   interface="com.huawei.dmestore.services.DataStoreStatisticHistoryService" />
+
+   <osgi:reference id="dmeRelationInstanceService"
+                   interface="com.huawei.dmestore.services.DmeRelationInstanceService" />
+
+   <osgi:reference id="dmeStorageService"
+                   interface="com.huawei.dmestore.services.DmeStorageService" />
+
+   <osgi:reference id="hostAccessService"
+                   interface="com.huawei.dmestore.services.HostAccessService" />
+
+   <osgi:reference id="nfsOperationService"
+                   interface="com.huawei.dmestore.services.NfsOperationService" />
+
+   <osgi:reference id="overviewService"
+                   interface="com.huawei.dmestore.services.OverviewService" />
+
+   <osgi:reference id="serviceLevelService"
+                   interface="com.huawei.dmestore.services.ServiceLevelService" />
+
+   <osgi:reference id="vmfsOperationService"
+                   interface="com.huawei.dmestore.services.VmfsOperationService" />
+
+   <osgi:reference id="VmRdmService"
+                   interface="com.huawei.dmestore.services.VmRdmService" />
+
+   <osgi:reference id="vmwareAccessService"
+                   interface="com.huawei.dmestore.services.VmwareAccessService" />
+
+</beans>
+

@@ -1,0 +1,47 @@
+<div *ngIf="!env.production" class="matero-container-wrap"
+     [ngClass]="{'matero-sidenav-collapsed': options.sidenavCollapsed && options.navPos!=='top',
+                 'matero-navbar-side': options.navPos==='side',
+                 'matero-navbar-top': options.navPos==='top',
+                 'matero-header-above': options.headerPos==='above',
+                 'matero-header-fixed': options.headerPos==='fixed',
+                 'matero-header-white': options.theme==='light'}"
+     [dir]="options.dir">
+  <ng-progress></ng-progress>
+
+  <!-- Header Above -->
+  <div class="main-container">
+    <header class="header header-7">
+      Header {{ env.production }}
+      <app-translate></app-translate>
+    </header>
+    <div class="content-container">
+      <clr-vertical-nav>
+        <a clrVerticalNavLink routerLink="./dashboard" routerLinkActive="active">Overview</a>
+        <a clrVerticalNavLink routerLink="./storage" routerLinkActive="active">Storage Device</a>
+        <a clrVerticalNavLink routerLink="./vmfs/list" routerLinkActive="active">VMFS Datastore</a>
+        <a clrVerticalNavLink routerLink="./raichu" routerLinkActive="active">NFS Datastore</a>
+        <a clrVerticalNavLink routerLink="./snorlax" routerLinkActive="active">Service Level</a>
+<!--        <a clrVerticalNavLink routerLink="./credit" routerLinkActive="active">Best Practice</a>-->
+        <a clrVerticalNavLink routerLink="./nfs" routerLinkActive="active">NFS list</a>
+      </clr-vertical-nav>
+      <div class="content-area loading-wrap">
+        <router-outlet></router-outlet>
+        <!-- 全局loading层 -->
+        <div *ngIf="gs.loading" class="loading-content">
+          <span class="spinner">
+            Loading...
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loading-wrap" *ngIf="env.production">
+  <router-outlet></router-outlet>
+  <!-- 全局loading层 -->
+  <div *ngIf="loading" class="loading-content">
+    <span class="spinner">
+      Loading...
+    </span>
+  </div>
+</div>

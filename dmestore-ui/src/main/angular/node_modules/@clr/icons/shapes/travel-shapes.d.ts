@@ -1,0 +1,14 @@
+export declare const ClrShapeTruck: string;
+export declare const ClrShapeAirplane: string;
+export declare const ClrShapeCar: string;
+export declare const ClrShapeMap: string;
+export declare const ClrShapeCompass: string;
+export declare const ClrShapeMapMarker: string;
+export declare const ClrShapeBicycle: string;
+export declare const ClrShapeBoat: string;
+export declare const ClrShapeCampervan: string;
+export declare const ClrShapeCaravan: string;
+export declare const ClrShapeFerry: string;
+export declare const ClrShapeTrailer: string;
+export declare const ClrShapeOnHoliday: string;
+export declare const TravelShapes: any;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+<bean name="context" class="com.vmware.vim.vmomi.core.types.impl.VmodlContextLoader">
+   <property name="vmodlTypeContext">
+      <list>
+         <value>com.vmware.vim.binding.vmodl.query.InvalidCollectorVersion</value>
+         <value>com.vmware.vim.binding.vmodl.query.InvalidProperty</value>
+         <value>com.vmware.vim.binding.vmodl.query.PropertyCollector</value>
+      </list>
+   </property>
+   <property name="vmodlDataObjects">
+      <map>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$TraversalSpec" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$TraversalSpec"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$ObjectContent" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$ObjectContent"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$SelectionSpec" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$SelectionSpec"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$ObjectUpdate" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$ObjectUpdate"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$MissingProperty" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$MissingProperty"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$ObjectSpec" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$ObjectSpec"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$UpdateSet" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$UpdateSet"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$MissingObject" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$MissingObject"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$RetrieveResult" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$RetrieveResult"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$FilterUpdate" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$FilterUpdate"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$Change" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$Change"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$FilterSpec" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$FilterSpec"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$RetrieveOptions" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$RetrieveOptions"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$PropertySpec" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$PropertySpec"/>
+         <entry key="com.vmware.vim.binding.vmodl.query.PropertyCollector$WaitOptions" value="com.vmware.vim.binding.vmodl.query.PropertyCollector$WaitOptions"/>
+      </map>
+   </property>
+   <property name="vmodlVersionContext">
+      <list>
+         <value>com.vmware.vim.binding.vmodl.query.version.internal.version1</value>
+         <value>com.vmware.vim.binding.vmodl.query.version.internal.version2</value>
+         <value>com.vmware.vim.binding.vmodl.query.version.internal.version3</value>
+         <value>com.vmware.vim.binding.vmodl.query.version.internal.version4</value>
+         <value>com.vmware.vim.binding.vmodl.query.version.version1</value>
+         <value>com.vmware.vim.binding.vmodl.query.version.version2</value>
+         <value>com.vmware.vim.binding.vmodl.query.version.version3</value>
+         <value>com.vmware.vim.binding.vmodl.query.version.version4</value>
+      </list>
+   </property>
+</bean>
+</beans>

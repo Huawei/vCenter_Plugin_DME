@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:osgi="http://www.springframework.org/schema/osgi"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                      http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+
+   <!-- definitions using elements of the osgi namespace can be included
+      in this file. There is no requirement to keep these definitions
+      in a separate file if you do not want to. The rationale for
+      keeping these definitions separate is to facilitate integration
+      testing of the bundle outside of an OSGi container -->
+
+   <!-- Services defined by this module   -->
+
+
+   <osgi:service id="SystemService" ref="SystemServiceImpl"
+                 interface="com.huawei.dmestore.services.SystemService" />
+
+   <osgi:service id="DmeAccessService" ref="DmeAccessServiceImpl"
+                 interface="com.huawei.dmestore.services.DmeAccessService" />
+
+   <osgi:service id="DmeNFSAccessService" ref="DmeNFSAccessServiceImpl"
+                 interface="com.huawei.dmestore.services.DmeNFSAccessService" />
+
+   <osgi:service id="VmfsAccessService" ref="VmfsAccessServiceImpl"
+                   interface="com.huawei.dmestore.services.VmfsAccessService" />
+
+   <osgi:service id="PluginRegisterService" ref="PluginRegisterServiceImpl"
+                 interface="com.huawei.dmestore.services.PluginRegisterService" />
+
+   <osgi:service id="VCenterInfoService" ref="VCenterInfoServiceImpl"
+                 interface="com.huawei.dmestore.services.VCenterInfoService" />
+
+   <osgi:service id="BestPracticeProcessService" ref="BestPracticeProcessServiceImpl"
+                 interface="com.huawei.dmestore.services.BestPracticeProcessService" />
+
+   <osgi:service id="DataStoreStatisticHistoryService" ref="DataStoreStatisticHistoryServiceImpl"
+                 interface="com.huawei.dmestore.services.DataStoreStatisticHistoryService" />
+
+   <osgi:service id="DmeRelationInstanceService" ref="DmeRelationInstanceServiceImpl"
+                 interface="com.huawei.dmestore.services.DmeRelationInstanceService" />
+
+   <osgi:service id="DmeStorageService" ref="DmeStorageServiceImpl"
+                 interface="com.huawei.dmestore.services.DmeStorageService" />
+
+   <osgi:service id="HostAccessService" ref="HostAccessServiceImpl"
+                 interface="com.huawei.dmestore.services.HostAccessService" />
+
+   <osgi:service id="NfsOperationService" ref="NfsOperationServiceImpl"
+                 interface="com.huawei.dmestore.services.NfsOperationService" />
+
+   <osgi:service id="OverviewService" ref="OverviewServiceImpl"
+                 interface="com.huawei.dmestore.services.OverviewService" />
+
+   <osgi:service id="ServiceLevelService" ref="ServiceLevelServiceImpl"
+                 interface="com.huawei.dmestore.services.ServiceLevelService" />
+
+   <osgi:service id="VmfsOperationService" ref="VmfsOperationServiceImpl"
+                 interface="com.huawei.dmestore.services.VmfsOperationService" />
+
+   <osgi:service id="VmRdmService" ref="VmRdmServiceImpl"
+                 interface="com.huawei.dmestore.services.VmRdmService" />
+
+   <osgi:service id="VmwareAccessService" ref="VmwareAccessServiceImpl"
+                 interface="com.huawei.dmestore.services.VmwareAccessService" />
+
+  <!-- References to platform services used by the controllers -->
+
+  <!-- <osgi:reference id="dataService"
+         interface="com.vmware.vise.data.query.DataService" />
+
+   <osgi:reference id="objectReferenceService"
+      interface="com.vmware.vise.data.query.ObjectReferenceService" />
+
+   <osgi:reference id="userSessionService"
+                   interface="com.vmware.vise.usersession.UserSessionService"/>-->
+
+   <osgi:reference id="dataServiceExtensionRegistry"
+                   interface="com.vmware.vise.data.query.DataServiceExtensionRegistry" />
+
+   <osgi:reference id="vimObjectReferenceService"
+                   interface="com.vmware.vise.vim.data.VimObjectReferenceService" />
+
+</beans>

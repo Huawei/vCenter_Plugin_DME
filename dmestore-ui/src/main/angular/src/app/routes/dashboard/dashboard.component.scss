@@ -1,0 +1,136 @@
+.count-wrap {
+  width: 100%;
+}
+.count-item {
+  // margin: 0 30px;
+  .num {
+    font-size: 30px;
+    font-weight: bold;
+    color: #565656;
+  }
+  .color-divide {
+    width: 60%;
+    height: 4px;
+    border-radius: 4px;
+    margin: 8px 0;
+  }
+  .critical {
+    background-color: #ca2200;
+  }
+  .major {
+    background-color: #f0c004;
+  }
+  .warning {
+    background-color: #fee273;
+  }
+  .info {
+    background-color: #79c6e6;
+  }
+  .text {
+    font-size: 14px;
+    color: #9e9e9e;
+  }
+}
+
+// 进度条样式开始
+.progress-container {
+  margin-bottom: 20px;
+  .progress-item {
+    display: flex;
+    align-items: center;
+  }
+}
+.progress-item {
+  .progress-label {
+    width: 100px;
+    font-size: 16px;
+    color: #9e9e9e;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+  .progress-default {
+    position: relative;
+    width: 400px;
+    height: 16px;
+    background-color: hsl(198, 0%, 87%);
+    .progress-inner {
+      height: 16px;
+      background-color: hsl(198, 100%, 32%);
+    }
+    .warning {
+      background-color: #f0c004;
+    }
+  }
+  .progress-text {
+    margin-left: 10px;
+    font-size: 16px;
+    .percent {
+      color: black;
+      font-weight: bold;
+    }
+    .unit {
+      color: #9e9e9e;
+    }
+  }
+}
+// 进度条样式结束
+.bestprac{
+  padding-left: 10%;
+  padding-top: 15px;
+}
+.over-top{
+  .info-card{
+    height: 100%;
+  }
+}
+.ds-wrap{
+  margin-top: 20px;
+  .info-card{
+    display: flex;
+  }
+}
+.ds-left{
+  width: 35%;
+}
+.ds-right {
+  width: 65%;
+  border-left: solid 1px #e8e8e8;
+  box-sizing: border-box;
+  padding-left: 150px;
+}
+.ds-chart{
+  .info-charts-wrap{
+    justify-content: center;
+  }
+}
+
+::ng-deep .clr-input-wrapper {
+  white-space: nowrap;
+  max-height: 1.2rem;
+  width: 220px;
+}
+
+.loading {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  //background: rgba(0, 0, 0, 0.7);
+  z-index: 150;
+}
+
+.loading img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  margin-left: -15px;
+}
+
+::ng-deep body, html {
+  overflow: scroll;
+}

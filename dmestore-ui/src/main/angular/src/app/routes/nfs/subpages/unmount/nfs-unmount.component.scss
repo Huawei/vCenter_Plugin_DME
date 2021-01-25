@@ -1,0 +1,80 @@
+.inputWidth100Percent{
+  width: 100%;
+}
+
+::ng-deep .selectClass .clr-select-wrapper{
+  width: 50%;
+}
+
+::ng-deep .selectClass .clr-select-wrapper select, .clr-multiselect-wrapper select {
+  width: 100%;
+}
+.modelTile{
+  line-height: 3rem;
+  border-bottom: 1px solid #DDDDDD;
+  font-weight: normal;
+}
+.errorTips{
+  border: none;
+  color: red;
+}
+.add-wizard-wrap ::ng-deep .modal-backdrop{
+  display: none;
+}
+.add-wizard-wrap ::ng-deep .modal{
+  padding: 0;
+  position: initial;
+}
+// 隐藏input标签箭头
+input[type=number] {
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  -moz-appearance: textfield;
+}
+.modelTile{
+  line-height: 3rem;
+  border-bottom: 1px solid #DDDDDD;
+  font-weight: normal;
+}
+::ng-deep .modal-title-text{
+  line-height: 3rem;
+  border-bottom: 1px solid #DDDDDD;
+  font-weight: bolder;
+}
+::ng-deep .modal-title-wrapper{
+  width: 100%;
+}
+
+::ng-deep .modal-dialog .modal-content{
+  box-shadow: none;
+}
+::ng-deep .add-wizard-wrap .modal-dialog {
+  height: 100vh;
+  max-height: none;
+  width: 100%;
+}
+.loadingDiv {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 100000;
+  left: 0;
+  top: 0;
+  background: rgba(0,0,0,0.3);
+}
+.loadingDiv span{
+  display: inline-block;
+  text-align: center;
+  top: 15%;
+  vertical-align: middle;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  font-size: .8rem;
+  color: white;
+  font-weight: bolder;
+}

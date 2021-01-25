@@ -1,0 +1,31 @@
+<div *ngIf="logicDetail">
+  <table class="table table-noborder">
+    <tr>
+      <td class="left">{{'nfs.logic.name' | translate}}</td>
+      <td class="left">{{logicDetail.name}}</td>
+
+      <td class="left">{{'nfs.logic.ip' | translate}}</td>
+      <td class="left">{{logicDetail.ip}}</td>
+
+      <td class="left">{{'nfs.logic.healthStatus' | translate}}</td>
+      <td class="left">{{logicDetail.status}}</td>
+    </tr>
+    <tr>
+      <td class="left">{{'nfs.logic.runningStatus' | translate}}</td>
+      <td class="left">{{logicDetail.runningStatus}}</td>
+
+      <td class="left">{{'nfs.logic.activePort' | translate}}</td>
+      <td class="left">{{logicDetail.activePort}}</td>
+
+      <td class="left">{{'nfs.logic.currentPort' | translate}}</td>
+      <td class="left">{{logicDetail.currentPort}}</td>
+    </tr>
+    <tr>
+      <td class="left">{{'nfs.logic.failoverGroup' | translate}}</td>
+      <td class="left">{{logicDetail.failoverGroup}}</td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="!logicDetail">
+  无
+</div>

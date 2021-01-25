@@ -1,0 +1,89 @@
+<clr-modal class="add-wizard-wrap" [(clrModalOpen)]="changeServiceLevelShow" [clrModalSize]="'lg'" [clrModalClosable]="false">
+  <div class="modal-body">
+    <form clrForm>
+
+      <div *ngIf="isOperationErr" class="errorTips" readonly ><clr-icon shape="exclamation-circle" class="is-solid"></clr-icon>{{'errorMsg.serviceLevelError' | translate}}</div>
+      <div *ngIf="modalHandleLoading" class="loadingDiv">
+          <span>
+            {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+          </span>
+      </div>
+      <div *ngIf="modalLoading" class="loadingDiv">
+          <span>
+            {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+          </span>
+      </div>
+
+      <!-- 1、选择 服务等级-->
+      <div *ngIf="serviceLevelIsNull" class="errorTips" readonly ><clr-icon shape="exclamation-circle" class="is-solid"></clr-icon>{{'vmfs.serviceLevelCantBeNull' | translate}}</div>
+      <ng-container>
+        <clr-accordion>
+          <clr-accordion-panel *ngFor="let item of serviceLevelList" style="margin-top: 20px;">
+            <clr-accordion-title class="accordion-title"  style="height: 50px; line-height: 50px;color: #333;font-size:16px;">{{item.name}}</clr-accordion-title>
+            <clr-accordion-content [(clrIfExpanded)]="item.show">
+              <table class="table table-vertical table-noborder table-compact">
+                <tbody>
+                <tr>
+                  <th hidden></th>
+                  <th>
+                    {{item.name}}
+                  </th>
+                </tr>
+                <tr>
+                  <th hidden></th>
+                  <td>{{'vmfs.capacityUsage' | translate}}</td>
+                  <td>{{'vmfs.qos' | translate}}</td>
+                  <td>{{'vmfs.protection' | translate}}</td>
+                </tr>
+                <tr>
+                  <th hidden></th>
+                  <th><clr-progress-bar clrValue="{{(item.usedCapacity/item.totalCapacity * 100 || 0).toFixed(2)}}" clrSuccess clrLabeled></clr-progress-bar></th>
+                  <th *ngIf="item.capabilities !== null && item.capabilities.qos !== null
+                        && item.capabilities.qos.qosParam !== null
+                        && item.capabilities.qos.qosParam.maxBandWidth !== 0">{{'vmfs.bandwidth' | translate}} <= {{item.capabilities.qos.qosParam.maxBandWidth}}MBPS/TB</th>
+                  <th *ngIf="item.capabilities !== null && item.capabilities.qos !== null
+                        && item.capabilities.qos.qosParam !== null
+                        && item.capabilities.qos.qosParam.minBandWidth !== 0">{{'vmfs.bandwidth' | translate}} >= {{item.capabilities.qos.qosParam.minBandWidth}}MBPS/TB</th>
+                  <th *ngIf="item.capabilities !== null && item.capabilities.qos !== null
+                        && item.capabilities.qos.qosParam !== null
+                        && item.capabilities.qos.qosParam.maxIOPS !== 0">{{'vmfs.iops' | translate}} <= {{item.capabilities.qos.qosParam.minIOPS}}IOPS/TB</th>
+                  <th *ngIf="item.capabilities !== null && item.capabilities.qos !== null
+                        && item.capabilities.qos.qosParam !== null
+                        && item.capabilities.qos.qosParam.minIOPS !== 0 ">{{'vmfs.iops' | translate}} >= {{item.capabilities.qos.qosParam.minIOPS}}IOPS/TB</th>
+                  <th *ngIf="item.capabilities === null || item.capabilities.qos === null || item.capabilities.qos.qosParam === null
+                        || (item.capabilities.qos.qosParam.maxBandWidth === 0 && item.capabilities.qos.qosParam.minBandWidth === 0)">--</th>
+                  <th *ngIf="item.capabilities === null || item.capabilities.qos === null || item.capabilities.qos.qosParam === null
+                        || (item.capabilities.qos.qosParam.minIOPS === 0 && item.capabilities.qos.qosParam.maxIOPS === 0)">--</th>
+                </tr>
+                <tr>
+                  <th hidden></th>
+                  <th>{{formatCapacity(item.usedCapacity, false)}} /{{formatCapacity(item.totalCapacity, false)}}</th>
+                  <th *ngIf="item.capabilities !== null && item.capabilities.qos !== null
+                        && item.capabilities.qos.qosParam !== null
+                        && item.capabilities.qos.qosParam.latency !== 0 ">Latency: {{item.capabilities.qos.qosParam.latency + item.capabilities.qos.qosParam.latencyUnit}}</th>
+                  <th *ngIf="item.capabilities === null || item.capabilities.qos === null || item.capabilities.qos.qosParam === null || item.capabilities.qos.qosParam.latency === 0">--</th>
+                </tr>
+                </tbody>
+              </table>
+            </clr-accordion-content>
+            <img src="./assets/images/selectDown.svg" style="position: absolute;right: 0px;bottom: 0px;" width="40px" height="40px">
+          </clr-accordion-panel>
+        </clr-accordion>
+      </ng-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="cancel()">{{'menu.cancel' | translate}}</button>
+    <button type="button" class="btn btn-primary" (click)="changeSLHandleFunc()">{{'menu.ok' | translate}}</button>
+  </div>
+</clr-modal>
+<!--操作成功提示-->
+<clr-modal [(clrModalOpen)]="changeServiceLevelSuccessShow" [clrModalSize]="'sm'" [clrModalClosable]="false">
+  <h3 class="modal-title modelTile">{{'vmfs.reclaim.title' | translate}}</h3>
+  <div class="modal-body">
+    <p *ngIf="changeServiceLevelSuccessShow">{{'vmfs.serviceLevel.success' | translate}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" (click)="changeServiceLevelSuccessShow = false;confirmActResult();">{{'menu.ok' | translate}}</button>
+  </div>
+</clr-modal>

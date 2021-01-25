@@ -1,0 +1,188 @@
+.inputOneLine{
+  border-bottom: 1px solid #dbdbdb;
+  border-top:0px;
+  border-left:0px;
+  border-right:0px;
+  width:80px;
+};
+.blueBg{
+  background-color: lightblue;
+}
+.merginLeft{
+  margin-left: 20px;
+  border-style: solid;
+}
+.expend-wrap{
+  padding: 0;
+  border: solid 1px hsl(198, 78%, 78%);
+  box-sizing: border-box;
+}
+.expend-wrap_active{
+  padding: 0 0 30px 0px;
+  border: none;
+  background-color: hsl(198, 83%, 94%);
+  .expend-title{
+    padding: 30px 30px;
+  }
+}
+.expend-title{
+  padding: 10px 30px;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--clr-card-title-color, black);
+}
+.tabs-btn-wrap{
+  margin-left: 10px;
+  display: inline-block;
+  border-radius: 20px;
+  border: solid 1px #ccc;
+  font-size: 12px;
+  line-height: 12px;
+  .tabs-btn{
+    padding: 5px 20px;
+    border-radius: 20px;
+
+    display: inline-block;
+    /* box-sizing: border-box; */
+    position: relative;
+    cursor: pointer;
+  }
+  .tabs-btn_active{
+    background-color: hsl(198, 100%, 32%);
+    border: none;
+    color: #fff;
+    z-index: 10;
+  }
+  .tabs-btn:not(:first-child){
+    margin-left: -10px;
+  }
+}
+.btn+.btn {
+  border-left: 0.05rem solid;
+}
+
+::ng-deep .clr-accordion-content{background-color: #EDF6FA;position: relative;border: none;}
+::ng-deep .clr-accordion-angle{display: none;}
+::ng-deep .clr-accordion-header{border: 3px solid #99C9E2; }
+::ng-deep .clr-accordion-panel:last-child .clr-accordion-header{border-bottom: 3px solid  #99C9E2;}
+::ng-deep .clr-accordion:not(.clr-stepper-forms) .clr-accordion-content{padding: 2rem .3rem;}
+::ng-deep .clr-accordion-panel:last-child .clr-accordion-content, .clr-accordion-panel:last-child .clr-accordion-header{border: none}
+
+::ng-deep clr-icon {
+  display: inline-block;
+  margin: 0;
+  height: 20px;
+  width: 20px;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+.inputWidth100Percent{
+  width: 100%;
+}
+
+::ng-deep .clr-select-wrapper{
+  width: 35%;
+}
+
+::ng-deep .clr-select-wrapper select, .clr-multiselect-wrapper select{
+  width: 100%;
+}
+
+::ng-deep .clr-combobox-wrapper{
+  width: 35%;
+  background-color: white;
+}
+::ng-deep .clr-input-wrapper{
+  width: 35%;
+  //border-bottom: .05rem solid;
+  //border-bottom-color: #b3b3b3;
+}
+//::ng-deep .capacity ::after{
+//  position: absolute;
+//  content: "";
+//  height: .5rem;
+//  width: .5rem;
+//  top: .2rem;
+//  right: .3rem;
+//  background-image: url(data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2012%2012%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%20%20%3Cstyle%3E.cls-1%7Bfill%3A%23b3b3b3%3B%7D%3C%2Fstyle%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Ctitle%3ECaret%3C%2Ftitle%3E%0A%20%20%20%20%3Cpath%20class%3D%22cls-1%22%20d%3D%22M6%2C9L1.2%2C4.2a0.68%2C0.68%2C0%2C0%2C1%2C1-1L6%2C7.08%2C9.84%2C3.24a0.68%2C0.68%2C0%2C1%2C1%2C1%2C1Z%22%2F%3E%0A%3C%2Fsvg%3E%0A);
+//  background-repeat: no-repeat;
+//  background-size: contain;
+//  vertical-align: middle;
+//  margin: 0
+//}
+
+::ng-deep .modal-title-text{
+  line-height: 3rem;
+  border-bottom: 1px solid #DDDDDD;
+  font-weight: bolder;
+}
+
+::ng-deep .clr-wizard .clr-wizard-stepnav-link{
+  font-weight: bolder;
+}
+// 隐藏滚动条 滑轮滚动
+#body{}
+-webkit-scrollbar{
+  width:0px;
+  height:0px;
+}
+.errorTips{
+  border: none;
+  color: red;
+}
+.page-title{
+  display: flex;
+  align-items: center;
+}
+::ng-deep .clr-accordion-panel-open .clr-accordion-header{
+  display: none;
+}
+
+::ng-deep .modal-title-wrapper{
+  width: 100%;
+}
+.modelTile{
+  line-height: 3rem;
+  border-bottom: 1px solid #DDDDDD;
+  font-weight: normal;
+}
+.add-wizard-wrap ::ng-deep .modal-backdrop{
+  display: none;
+}
+.add-wizard-wrap ::ng-deep .modal{
+  padding: 0;
+  position: initial;
+}
+
+.loadingDiv {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 100000;
+  left: 0;
+  top: 0;
+  background: rgba(0,0,0,0.3);
+}
+.loadingDiv span{
+  display: inline-block;
+  text-align: center;
+  top: 15%;
+  vertical-align: middle;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  font-size: .8rem;
+  color: white;
+  font-weight: bolder;
+}
+
+::ng-deep .add-wizard-wrap .modal-dialog {
+  height: 100vh;
+  max-height: none;
+  width: 100%;
+}
+
+::ng-deep .modal-dialog .modal-content{
+  box-shadow: none;
+}

@@ -1,0 +1,111 @@
+<div>
+  <!--卸载提示-->
+  <clr-modal [clrModalOpen]="viewPage=='unmount_pugin'" [clrModalSize]="'md'" [clrModalClosable]="false">
+    <h3 class="modal-title">{{'nfs.unmount.title' | translate}}</h3>
+    <div class="modal-body">
+      <form clrForm>
+        <p *ngIf="errorMsg" style="color: red">{{'errorMsg.unMountError' | translate}}</p>
+        <div *ngIf="modalLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <div *ngIf="modalHandleLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.mountedHost' | translate}}</label>
+          <select clrSelect (ngModelOptions)="hostList" [(ngModel)]="hostId"
+                  required name="hostId" class="clr-select">
+            <option *ngFor="let item of hostList" value="{{item.hostId}}">{{item.hostName}}</option>
+          </select>
+        </clr-select-container>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="backToNfsList()">{{'menu.cancel' | translate}}</button>
+      <button type="button" class="btn btn-primary" (click)="unMount()">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+  <clr-modal class="add-wizard-wrap" [clrModalOpen]="viewPage=='unmount_vcenter'" [clrModalSize]="'md'" [clrModalClosable]="false">
+    <div class="modal-body">
+      <form clrForm>
+        <p *ngIf="errorMsg" style="color: red">{{'errorMsg.unMountError' | translate}}</p>
+        <div *ngIf="modalLoading" class="loadingDiv">
+    <span>
+      {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+    </span>
+        </div>
+        <div *ngIf="modalHandleLoading" class="loadingDiv">
+    <span>
+      {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+    </span>
+        </div>
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.mountedHost' | translate}}</label>
+          <select clrSelect (ngModelOptions)="hostList" [(ngModel)]="hostId"
+                  required name="hostId" class="clr-select">
+            <option *ngFor="let item of hostList" value="{{item.hostId}}">{{item.hostName}}</option>
+          </select>
+        </clr-select-container>
+      </form>
+    </div>
+    <div style="float:right;" class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="closeModel()">{{'menu.cancel' | translate}}</button>
+      <button type="button" class="btn btn-primary" (click)="unMount()">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+  <clr-modal class="add-wizard-wrap" [clrModalOpen]="viewPage=='unmount_host'" [clrModalSize]="'md'" [clrModalClosable]="false">
+    <div class="modal-body">
+      <form clrForm>
+        <p *ngIf="errorMsg" style="color: red">{{'errorMsg.unMountError' | translate}}</p>
+        <div *ngIf="modalLoading" class="loadingDiv">
+    <span>
+      {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+    </span>
+        </div>
+        <div *ngIf="modalHandleLoading" class="loadingDiv">
+    <span>
+      {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+    </span>
+        </div>
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.nfsStore' | translate}}</label>
+          <select clrSelect (ngModelOptions)="dataStoreList" [(ngModel)]="dataStoreObjectId"
+                  required name="dataStoreObjectId" class="clr-select">
+            <option *ngFor="let item of dataStoreList" value="{{item.objectId}}">{{item.name}}</option>
+          </select>
+        </clr-select-container>
+      </form>
+    </div>
+    <div style="float: right" class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="closeModel()">{{'menu.cancel' | translate}}</button>
+      <button type="button" class="btn btn-primary" (click)="unMount()">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+
+  <!--卸载提示-->
+  <clr-modal [(clrModalOpen)]="unmountTipsShow" [clrModalSize]="'sm'" [clrModalClosable]="false">
+    <h3 class="modal-title modelTile">{{'vmfs.reclaim.title' | translate}}</h3>
+    <div class="modal-body">
+      <p>{{'nfs.unmount.tips' | translate}}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="unmountTipsShow=false;">{{'menu.cancel' | translate}}</button>
+      <button type="submit" class="btn btn-primary" (click)="unmountTipsShow=false;unmountHandleFunc()">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+
+  <!--操作成功提示-->
+  <clr-modal [(clrModalOpen)]="unmountSuccessShow" [clrModalSize]="'sm'" [clrModalClosable]="false">
+    <h3 class="modal-title modelTile">{{'vmfs.reclaim.title' | translate}}</h3>
+    <div class="modal-body">
+      <p *ngIf="unmountSuccessShow">{{'vmfs.unmount.success' | translate}}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" (click)="unmountSuccessShow = false;confirmActResult();">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+</div>

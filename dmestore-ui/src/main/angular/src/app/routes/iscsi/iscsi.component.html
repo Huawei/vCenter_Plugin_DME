@@ -1,0 +1,112 @@
+<div>
+  <div style="margin-left: 30px;margin-right: 30px">
+    <div>
+      <form clrForm #myForm="ngForm">
+        <clr-select-container>
+          <label>{{'iscsi.hostIp' | translate}}<span style="color: red">*</span>:</label>
+          <select clrSelect (change)="loadPorts();" (ngModelOptions)="ips"  required [(ngModel)]="configModel.vmKernel.device" name="hostIp" >
+            <option *ngFor="let item of ips" value="{{item.device}}">{{item.ipAddress}}({{item.device}})</option>
+          </select>
+          <clr-control-error>{{'validations.required' | translate}}</clr-control-error>
+        </clr-select-container>
+        <clr-select-container>
+          <label>{{'iscsi.storage' | translate}}<span style="color: red">*</span>:</label>
+          <select clrSelect (change)="loadPorts();" (ngModelOptions)="storageDevices" required [(ngModel)]="configModel.sn" name="storageDeviceId" >
+            <option *ngFor="let item of storageDevices" value="{{item.sn}}">{{item.name}}</option>
+          </select>
+          <clr-control-error>{{'validations.required' | translate}}</clr-control-error>
+        </clr-select-container>
+      </form>
+    </div>
+    <div style="margin-top: 20px">
+      <p style="margin-top: 2%">{{'iscsi.ports' | translate}}<span style="color: red">*</span></p>
+      <ng-container>
+        <clr-datagrid [(clrDgSelected)]="configModel.ethPorts"  [clrDgLoading]="portLoading">
+
+          <clr-dg-column [clrDgField]="'location'">{{'iscsi.location' | translate}}</clr-dg-column>
+          <clr-dg-column [clrDgField]="'portName'">{{'iscsi.portName' | translate}}</clr-dg-column>
+          <clr-dg-column [clrDgField]="'mac'">{{'iscsi.mac' | translate}}</clr-dg-column>
+          <clr-dg-column [clrDgField]="'maxSpeed'">{{'iscsi.maxSpeed' | translate}}</clr-dg-column>
+          <clr-dg-column [clrDgField]="'mgmtIp'">{{'iscsi.ip4' | translate}}</clr-dg-column>
+          <clr-dg-column [clrDgField]="'mgmtIpv6'">{{'iscsi.ip6' | translate}}</clr-dg-column>
+          <clr-dg-column [clrDgField]="'speed'">{{'iscsi.speed' | translate}}</clr-dg-column>
+          <clr-dg-column [clrDgField]="'status'">{{'iscsi.hStatus' | translate}}</clr-dg-column>
+          <clr-dg-column [clrDgField]="'connectStatus'">{{'iscsi.cStatus' | translate}}</clr-dg-column>
+
+          <clr-dg-row *clrDgItems="let item of portList"  [clrDgItem]="item" [clrDgSelectable]="item.connectStatus == 'true'">
+            <clr-dg-cell>{{item.location}}</clr-dg-cell>
+            <clr-dg-cell>{{item.portName}}</clr-dg-cell>
+            <clr-dg-cell>
+              <span *ngIf="item.mac == ''">--</span>
+              <span *ngIf="item.mac != ''">{{item.mac}}</span>
+            </clr-dg-cell>
+            <clr-dg-cell>
+              <span *ngIf="item.maxSpeed == -1">--</span>
+              <span *ngIf="item.maxSpeed != -1">{{item.maxSpeed}}</span>
+            </clr-dg-cell>
+            <clr-dg-cell>
+              <span *ngIf="item.mgmtIp == ''">--</span>
+              <span *ngIf="item.mgmtIp != ''">{{item.mgmtIp}}</span>
+            </clr-dg-cell>
+            <clr-dg-cell>
+              <span *ngIf="item.mgmtIpv6 == ''">--</span>
+              <span *ngIf="item.mgmtIpv6 != ''">{{item.mgmtIpv6}}</span>
+            </clr-dg-cell>
+            <clr-dg-cell>
+              <span *ngIf="item.speed == -1">--</span>
+              <span *ngIf="item.speed != -1">{{item.speed}}</span>
+            </clr-dg-cell>
+            <clr-dg-cell>{{item.status}}</clr-dg-cell>
+            <clr-dg-cell>
+              <span *ngIf="item.connectStatus == 'true'">
+                <span class="color-square" [style.backgroundColor]="'green'"></span>
+              </span>
+              <span *ngIf="item.connectStatus == 'false' || item.mgmtIp == '' || item.mgmtIp == null">
+                 <span class="color-square" [style.backgroundColor]="'red'"></span>
+              </span>
+              <span *ngIf="item.connectStatus == '' && item.mgmtIp != ''">
+                 <img src="./assets/images/loading.gif"  width="20px" height="20px">
+              </span>
+            </clr-dg-cell>
+          </clr-dg-row>
+
+          <!--<clr-dg-footer>
+            <clr-dg-pagination #pagination [clrDgPageSize]="5" [clrDgTotalItems]="portTotal">
+              <clr-dg-page-size [clrPageSizeOptions]="[5,10,50,100]"></clr-dg-page-size>
+              {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+              of {{pagination.totalItems}}
+            </clr-dg-pagination>
+          </clr-dg-footer>-->
+
+        </clr-datagrid>
+      </ng-container>
+      <p><span [hidden]="configModel.ethPorts.length != 0 || !isSubmit" style="color: #c61d00;">{{'iscsi.portNullMessage'|translate}}</span></p>
+    </div>
+    <div style="margin-top: 20px;margin-bottom: 40px">
+      <button type="button" style="display:block;margin:0 auto" class="btn btn-primary" (click)="submit()">{{'menu.ok' | translate}}</button>
+    </div>
+  </div>
+  <div class="loadingDiv" [hidden]="!ipLoading"><clr-spinner class="spinner spinner-md">Loading</clr-spinner></div>
+  <div class="loadingDiv" [hidden]="!dsDeviceLoading"><clr-spinner class="spinner spinner-md">Loading</clr-spinner></div>
+  <div class="loadingDiv" [hidden]="!submitLoading"><clr-spinner class="spinner spinner-md">Loading</clr-spinner></div>
+</div>
+
+<clr-modal [(clrModalOpen)]="tipModalSuccess" [clrModalSize]="'sm'">
+  <h3 class="modal-title">{{'menu.tip'|translate}}</h3>
+  <div class="modal-body">
+    <clr-icon shape="success-standard" class="is-solid" style="color: #59A220;margin-right: 5px;"></clr-icon>{{'bestPractice.exeSuccess'|translate}}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="tipModalSuccess=false;closeWin();">{{'menu.ok'|translate}}</button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="tipModalFail" [clrModalSize]="'sm'">
+  <h3 class="modal-title">{{'menu.tip'|translate}}</h3>
+  <div class="modal-body">
+    <clr-icon shape="error-standard" class="is-solid" style="color: red;margin-right: 5px;"></clr-icon>{{'bestPractice.exeFail'|translate}}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="tipModalFail=false">{{'menu.ok'|translate}}</button>
+  </div>
+</clr-modal>

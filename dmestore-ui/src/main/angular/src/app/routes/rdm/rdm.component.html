@@ -1,0 +1,355 @@
+<!-- 弹出form提交框 添加 -->
+<clr-wizard class="add-wizard-wrap" #wizard [clrWizardOpen]="true" [clrWizardClosable]="false">
+  <clr-wizard-title style="font-weight: bolder">{{'rdm.addTitle' | translate}}</clr-wizard-title>
+
+  <clr-wizard-page #addPageOne [clrWizardPageNextDisabled]="!formPageOne.valid">
+    <ng-template clrPageTitle>{{'rdm.basicSet' | translate}}</ng-template> <!-- mandatory -->
+
+    <form clrForm #formPageOne="ngForm">
+      <!--名称 -->
+      <clr-input-container>
+        <label  style="color: #9F9F9F;">{{'rdm.name' | translate}}<span style="color: red">*</span></label>
+        <input clrInput class="inputWidth100Percent"  [(ngModel)]="configModel.volumeSpecs[0].name" name="name" #name="ngModel" required/>
+        <clr-control-error>{{'validations.required' | translate}}</clr-control-error>
+      </clr-input-container>
+
+      <!-- 容量 -->
+      <clr-input-container>
+        <label  style="color: #9F9F9F;">{{'rdm.capacity' | translate}}<span style="color: red">*</span></label>
+        <div clrInput style="float: left;width: 54%;position: relative;">
+          <!-- V5时最小值1.3G V6时最小值2G-->
+          <input clrInput style="width: 60%;border-bottom: none" min="0" type="number" [(ngModel)]="configModel.volumeSpecs[0].capacity" name="capacity" #number="ngModel"
+                  required/>
+          <select class="capacity" (change)="configModel.volumeSpecs[0].capacity = null;" clrInput style="width: 40%;border: 1px solid #DDDDDD;position: absolute;bottom: 3px;"
+                  [(ngModel)]="configModel.volumeSpecs[0].unit" name="unit" >
+            <option value="GB">GB</option>
+            <option value="TB">TB</option>
+          </select>
+        </div>
+        <input clrInput style="width: 19%;text-align: center;" readonly name="ss" value="{{'vmfs.multiply' | translate}}"/>
+        <input clrInput style="width: 27%;" min="1" type="number" [(ngModel)]="configModel.volumeSpecs[0].count" name="count" #number="ngModel" required/>
+        <!--<clr-control-helper>
+          <div class="errorTips" readonly >
+            <clr-icon shape="exclamation-circle" class="is-solid"></clr-icon>{{'vmfs.capacityTips' | translate}}
+          </div>
+        </clr-control-helper>-->
+        <clr-control-error>{{'validations.required' | translate}}</clr-control-error>
+      </clr-input-container>
+
+      <!--存储-->
+      <clr-select-container class="selectClass">>
+        <label  style="color: #9F9F9F;">{{'rdm.dataStore' | translate}}<span style="color: red">*</span></label>
+        <select clrSelect (ngModelOptions)="dataStores" required [(ngModel)]="dataStoreObjectId" name="dataStoreObjectId" class="clr-select">
+          <option *ngFor="let item of dataStores" value="{{item.objectId}}">{{item.name}}</option>
+        </select>
+        <clr-control-error>{{'validations.required' | translate}}</clr-control-error>
+      </clr-select-container>
+    </form>
+    <ng-template clrPageButtons>
+      <clr-wizard-button [type]="'cancel'" (click)="closeWin();">{{'menu.cancel' | translate}}</clr-wizard-button>
+      <clr-wizard-button (click)="addNextPage();" [type]="'custom-next'">{{'menu.next' | translate}}</clr-wizard-button>
+    </ng-template>
+  </clr-wizard-page>
+  <!--Page2 储存库设置-->
+  <clr-wizard-page #addPageTwo [clrWizardPageNextDisabled]="!formPageTwo.valid" >
+    <ng-template clrPageNavTitle>
+      {{'rdm.storeSet' | translate}}
+    </ng-template>
+    <ng-template clrPageTitle>
+      <div class="page-title">
+        <span>{{'rdm.storeSet' | translate}}</span>
+        <!-- mandatory -->
+        <span class="tabs-btn-wrap">
+              <!-- 服务等级 -->
+              <span  class="tabs-btn" (click)="levelCheck='level';configModel.storageType='1'" [ngClass]="{'tabs-btn_active': levelCheck === 'level'}">{{'rdm.tier' | translate}}</span>
+          <!-- 非服务等级 -->
+              <span  class="tabs-btn" (click)="
+                  levelCheck='storage';
+                  configModel.storageType='2';
+                  serviceLevelId = '';
+                  serviceLevelIsNull = false;"
+                     [ngClass]="{'tabs-btn_active': levelCheck === 'storage'}">{{'rdm.storage1' | translate}}</span>
+            </span>
+      </div>
+
+    </ng-template>
+
+
+    <form clrForm #formPageTwo="ngForm">
+      <!-- 1、选择 服务等级-->
+      <div [hidden]="!serviceLevelIsNull" class="errorTips" readonly ><clr-icon shape="exclamation-circle" class="is-solid"></clr-icon>{{'rdm.selectOneSer' | translate}}</div>
+      <div [hidden]="!isOperationErr"  class="errorTips" readonly ><clr-icon shape="exclamation-circle" class="is-solid"></clr-icon>{{'rdm.createRdmError' | translate}}</div>
+      <!-- 1、选择 服务等级-->
+      <ng-container *ngIf="levelCheck==='level'">
+        <clr-accordion>
+          <clr-accordion-panel  (click)="serviceLevelClick(item.id);" *ngFor="let item of serviceLevels;" style="margin-top: 20px;" >
+            <clr-accordion-title  style="height: 50px; line-height: 50px;color: #333;font-size:16px;">{{item.name}}</clr-accordion-title>
+            <clr-accordion-content>
+              <table class="table table-vertical table-noborder table-compact">
+                <tbody>
+                <tr>
+                  <th hidden></th>
+                  <th>
+                    {{item.name}}
+                  </th>
+                </tr>
+                <tr>
+                  <th hidden></th>
+                  <td>{{'vmfs.capacityUsage' | translate}}</td>
+                  <td>{{'vmfs.qos' | translate}}</td>
+                  <td>{{'vmfs.protection' | translate}}</td>
+                </tr>
+                <tr>
+                  <th hidden></th>
+                  <th><clr-progress-bar clrValue="{{item.usedRate}}" clrSuccess clrLabeled></clr-progress-bar></th>
+                  <th *ngIf="item.capabilities.qos != undefined && item.capabilities.qos.qosParam.maxIOPS != undefined">
+                    IOPS <= {{item.capabilities.qos.qosParam.maxIOPS}} IOPS/TB
+                  </th>
+                  <th *ngIf="item.capabilities.qos != undefined && item.capabilities.qos.qosParam.minIOPS != undefined">
+                    IOPS >= {{item.capabilities.qos.qosParam.minIOPS}} IOPS/TB
+                  </th>
+                </tr>
+                <tr>
+                  <th hidden></th>
+                  <th></th>
+                  <th *ngIf="item.capabilities.qos != undefined
+                                                && item.capabilities.qos.enabled == true
+                                                && item.capabilities.qos.qosParam.minBandWidth != undefined">
+                    {{'tier.bandwidth'|translate}} >= {{item.capabilities.qos.qosParam.minBandWidth}} Mbps/s
+                  </th>
+                  <th *ngIf="item.capabilities.qos != undefined
+                                                && item.capabilities.qos.enabled == true
+                                                && item.capabilities.qos.qosParam.maxBandWidth != undefined">
+                    {{'tier.bandwidth'|translate}} <= {{item.capabilities.qos.qosParam.maxBandWidth}} Mbps/s
+                  </th>
+                </tr>
+                <tr>
+                  <th hidden></th>
+                  <th>{{item.usedCapacity}} GB/{{item.totalCapacity}}GB</th>
+                  <th *ngIf="item.capabilities.qos != undefined
+                                                && item.capabilities.qos.enabled == true
+                                                && item.capabilities.qos.qosParam.latency != undefined">
+                    Latency= {{item.capabilities.qos.qosParam.latency}} {{item.capabilities.qos.qosParam.latencyUnit}}
+                  </th>
+                </tr>
+                </tbody>
+              </table>
+            </clr-accordion-content>
+            <img src="./assets/images/selectDown.svg" style="position: absolute;right: 0px;bottom: 0px;" width="40px" height="40px">
+          </clr-accordion-panel>
+        </clr-accordion>
+      </ng-container>
+      <!-- 2、未选择 服务等级-->
+      <ng-container *ngIf="levelCheck==='storage'">
+        <clr-select-container class="selectClass">
+          <label style="color: #9F9F9F;">{{'rdm.storage' | translate}}<span style="color: red">*</span></label>:
+          <select clrSelect  [(ngModel)]="configModel.storageId" name="storageId" required (ngModelChange)="loadStoragePool(configModel.storageId);">
+            <option *ngFor="let item of storageDevices" value="{{item.id}}">{{item.name}}</option>
+          </select>
+          <clr-control-error>{{'validations.required' | translate}}</clr-control-error>
+        </clr-select-container>
+        <clr-select-container class="selectClass">
+          <label style="color: #9F9F9F;">{{'rdm.sPool' | translate}}<span style="color: red">*</span></label>:
+          <select clrSelect [(ngModel)]="configModel.poolRawId" name="poolRawId" required>
+            <option *ngFor="let item of storagePools" value="{{item.id}}">{{item.name}}</option>
+          </select>
+          <clr-control-error>{{'validations.required' | translate}}</clr-control-error>
+        </clr-select-container>
+
+        <clr-select-container class="selectClass" *ngIf="ownershipController">
+          <label style="color: #9F9F9F;">{{'rdm.ownerC' | translate}}<span style="color: red">*</span></label>:
+          <select clrSelect [(ngModel)]="configModel.ownerController" name="ownerController" required>
+            <option value="0">{{'rdm.autoSelect' | translate}}</option>
+            <option *ngFor="let item of ownerControllers" value="{{item.name}}">{{item.name}}</option>
+          </select>
+          <clr-control-error>{{'validations.required' | translate}}</clr-control-error>
+        </clr-select-container>
+
+        <clr-select-container class="selectClass">
+          <label style="color: #9F9F9F;">{{'rdm.idp' | translate}}<span style="color: red">*</span></label>:
+          <select clrSelect [(ngModel)]="configModel.initialDistributePolicy" name="initialDistributePolicy" required>
+            <option value="0">{{'rdm.autoSelect' | translate}}</option>
+            <option value="1">{{'rdm.hperformanceLevel' | translate}}</option>
+            <option value="2">{{'rdm.performanceLevel' | translate}}</option>
+            <option value="3">{{'rdm.capacityLevel' | translate}}</option>
+          </select>
+          <clr-control-error>{{'validations.required' | translate}}</clr-control-error>
+        </clr-select-container>
+
+        <clr-select-container class="selectClass">
+          <label style="color: #9F9F9F;">{{'rdm.fetchP' | translate}}<span style="color: red">*</span></label>:
+          <select clrSelect [(ngModel)]="configModel.prefetchPolicy" name="prefetchPolicy" required>
+            <option value="0">{{'rdm.notFetch' | translate}}</option>
+            <option value="1">{{'rdm.fixedFetch' | translate}}</option>
+            <option value="2">{{'rdm.variableFetch' | translate}}</option>
+            <option value="3">{{'rdm.smartFetch' | translate}}</option>
+          </select>
+          <clr-control-error>{{'validations.required' | translate}}</clr-control-error>
+        </clr-select-container>
+
+        <clr-input-container>
+          <label style="color: #9F9F9F;">{{'rdm.tuning' | translate}}</label>
+        </clr-input-container>
+
+
+
+        <clr-toggle-container>
+          <clr-toggle-wrapper>
+            <label style="color: #9F9F9F;">{{'rdm.smartTier' | translate}}</label>
+            <input type="checkbox" clrToggle [(ngModel)]="policyEnable.smartTier" name="smartTierE" />
+          </clr-toggle-wrapper>
+        </clr-toggle-container>
+
+        <clr-select-container class="selectClass" *ngIf="policyEnable.smartTier">
+          <label style="color: #9F9F9F;">{{'rdm.smartTierP' | translate}}<span style="color: red">*</span></label>:
+          <select clrSelect [(ngModel)]="configModel.tuning.smarttier" name="smarttier">
+            <option value="0">{{'rdm.notMove' | translate}}</option>
+            <option value="1">{{'rdm.autoMove' | translate}}</option>
+            <option value="2">{{'rdm.highPMove' | translate}}</option>
+            <option value="3">{{'rdm.lowPMove' | translate}}</option>
+          </select>
+        </clr-select-container>
+
+
+        <clr-toggle-container>
+          <clr-toggle-wrapper>
+            <label style="color: #9F9F9F;">{{'rdm.qosP' | translate}}</label>
+            <input type="checkbox" clrToggle  [(ngModel)]="policyEnable.qosPolicy" name="qosPolicyE" />
+          </clr-toggle-wrapper>
+        </clr-toggle-container>
+
+        <clr-radio-container clrInline *ngIf="policyEnable.qosPolicy">
+          <label style="color: #9F9F9F;" class="floatleft">{{'rdm.controlP' | translate}}<span style="color: red">*</span></label>
+          <clr-radio-wrapper>
+            <input type="radio" clrRadio name="controlPolicy" required value="1" (change)="changeQosRedio()" [(ngModel)]="configModel.tuning.smartqos.controlPolicy" />
+            <label style="color: #9F9F9F;">{{'rdm.uLimit' | translate}}</label>
+          </clr-radio-wrapper>
+          <clr-radio-wrapper>
+            <input type="radio" clrRadio name="controlPolicy" required value="0" (change)="changeQosRedio()" [(ngModel)]="configModel.tuning.smartqos.controlPolicy" />
+            <label style="color: #9F9F9F;">{{'rdm.lLimit' | translate}}</label>
+          </clr-radio-wrapper>
+        </clr-radio-container>
+
+        <div *ngIf="policyEnable.qosPolicy">
+          <clr-checkbox-container *ngIf="configModel.tuning.smartqos.controlPolicy==='1'">
+            <label style="color: #9F9F9F;">{{'rdm.trafficC' | translate}}<span style="color: red">*</span></label>
+            <clr-checkbox-wrapper>
+              <input type="checkbox" clrCheckbox name="c1" [(ngModel)]="options1" (change)="changeQosInput('box')"/>
+              <label style="color: #9F9F9F;" style="width: 230px">{{'rdm.bandwidth' | translate}} <=
+                <input class="inputOneLine" disabled="{{!options1}}" name="Brandwidth" [(ngModel)]="configModel.tuning.smartqos.maxbandwidth"
+                       (change)="changeQosInput('band')"
+                       onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"/> MB/s
+              </label>
+            </clr-checkbox-wrapper>
+            <clr-checkbox-wrapper>
+              <input type="checkbox" clrCheckbox name="c2" [(ngModel)]="options2" (change)="changeQosInput('box')"/>
+              <label style="color: #9F9F9F;" style="width: 230px">IOPS <=
+                <input class="inputOneLine" disabled="{{!options2}}" name="IOPS" [(ngModel)]="configModel.tuning.smartqos.maxiops"
+                       (change)="changeQosInput('iops')"
+                       onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"/>
+              </label>
+            </clr-checkbox-wrapper>
+          </clr-checkbox-container>
+          <clr-checkbox-container *ngIf="configModel.tuning.smartqos.controlPolicy==='0'">
+            <label style="color: #9F9F9F;">{{'rdm.trafficC' | translate}}<span style="color: red">*</span></label>
+            <clr-checkbox-wrapper>
+              <input type="checkbox" clrCheckbox  name="c3"  [(ngModel)]="options3" (change)="changeQosInput('box')"/>
+              <label style="color: #9F9F9F;" style="width: 230px">{{'rdm.bandwidth' | translate}} >=
+                <input class="inputOneLine" disabled="{{!options3}}" name="Bandwidth" [(ngModel)]="configModel.tuning.smartqos.minbandwidth"
+                       (change)="changeQosInput('band')"
+                       onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"/> MB/s
+              </label>
+            </clr-checkbox-wrapper>
+            <clr-checkbox-wrapper>
+              <input type="checkbox" clrCheckbox name="c4"  [(ngModel)]="options4" (change)="changeQosInput('box')"/>
+              <label style="color: #9F9F9F;" style="width: 230px">IOPS >=
+                <input class="inputOneLine" disabled="{{!options4}}" name="IOPS" [(ngModel)]="configModel.tuning.smartqos.miniops"
+                       (change)="changeQosInput('iops')"
+                       onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"/>
+              </label>
+            </clr-checkbox-wrapper>
+            <clr-checkbox-wrapper>
+              <input type="checkbox" clrCheckbox name="c5"  [(ngModel)]="options5" (change)="changeQosInput('box')"/>
+              <label style="color: #9F9F9F;" style="width: 230px">{{'rdm.latency' | translate}} <=
+                <input class="inputOneLine" disabled="{{!options5}}" name="Latency" [(ngModel)]="configModel.tuning.smartqos.latency"
+                       (change)="changeQosInput('latency')"
+                       onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"/> ms
+              </label>
+            </clr-checkbox-wrapper>
+          </clr-checkbox-container>
+          <div style="margin-left: 150px">
+            <div [hidden]="!qos1Show"><span style="color: #C7381F;">{{'rdm.atOne'| translate}}</span></div>
+            <div [hidden]="!qos2Show"><span style="color: #C7381F;">{{'rdm.bandNotNull'| translate}}</span></div>
+            <div [hidden]="!qos3Show"><span style="color: #C7381F;">{{'rdm.IOPSNotNull'| translate}}</span></div>
+            <div [hidden]="!qos4Show"><span style="color: #C7381F;">{{'rdm.latencyNotNull'| translate}}</span></div>
+          </div>
+        </div>
+
+        <clr-toggle-container>
+          <clr-toggle-wrapper>
+            <label style="color: #9F9F9F;">{{'rdm.rtuning' | translate}}</label>
+            <input type="checkbox" clrToggle [(ngModel)]="policyEnable.resourceTuning" name="resourceTuningE" />
+          </clr-toggle-wrapper>
+        </clr-toggle-container>
+
+        <clr-select-container class="selectClass" *ngIf="policyEnable.resourceTuning">
+          <label style="color: #9F9F9F;">{{'rdm.alloctype' | translate}}<span style="color: red">*</span></label>:
+          <select clrSelect [(ngModel)]="configModel.tuning.alloctype" name="alloctype" >
+            <option value="thin">thin</option>
+            <option value="thick">thick</option>
+          </select>
+        </clr-select-container>
+
+        <clr-select-container class="selectClass" *ngIf="configModel.tuning.alloctype == 'thin' && policyEnable.resourceTuning">
+          <label style="color: #9F9F9F;">{{'rdm.dedupe' | translate}}<span style="color: red">*</span></label>:
+          <select clrSelect [(ngModel)]="configModel.tuning.dedupeEnabled" name="dedupe" >
+            <option value=null>{{'rdm.default' | translate}}</option>
+            <option value=true>{{'rdm.enable' | translate}}</option>
+            <option value=false>{{'rdm.disable' | translate}}</option>
+          </select>
+        </clr-select-container>
+
+        <clr-select-container class="selectClass" *ngIf="configModel.tuning.alloctype == 'thin' && policyEnable.resourceTuning">
+          <label style="color: #9F9F9F;">{{'rdm.compression' | translate}}<span style="color: red">*</span></label>:
+          <select clrSelect [(ngModel)]="configModel.tuning.compressionEnabled" name="compression" >
+            <option value=null>{{'rdm.default' | translate}}</option>
+            <option value=true>{{'rdm.enable' | translate}}</option>
+            <option value=false>{{'rdm.disable' | translate}}</option>
+          </select>
+        </clr-select-container>
+      </ng-container>
+
+    </form>
+    <ng-template clrPageButtons>
+      <clr-wizard-button [type]="'cancel'" (click)="closeWin();">{{'menu.cancel' | translate}}</clr-wizard-button>
+      <clr-wizard-button [type]="'previous'">{{'menu.previous' | translate}}</clr-wizard-button>
+      <clr-wizard-button [type]="'custom-finish'" (click)="submit();">{{'menu.ok' | translate}}</clr-wizard-button>
+    </ng-template>
+  </clr-wizard-page>
+
+  <div class="loadingDiv" [hidden]="!dsLoading"><clr-spinner class="spinner spinner-md">Loading</clr-spinner></div>
+  <div class="loadingDiv" [hidden]="!dsDeviceLoading"><clr-spinner class="spinner spinner-md">Loading</clr-spinner></div>
+  <div class="loadingDiv" [hidden]="!slLoading"><clr-spinner class="spinner spinner-md">Loading</clr-spinner></div>
+  <div class="loadingDiv" [hidden]="!tierLoading"><clr-spinner class="spinner spinner-md">Loading</clr-spinner></div>
+  <div class="loadingDiv" [hidden]="!submitLoading"><clr-spinner class="spinner spinner-md">Loading</clr-spinner></div>
+</clr-wizard>
+
+<clr-modal [(clrModalOpen)]="rdmSuccess" [clrModalSize]="'sm'">
+  <h3 class="modal-title">{{'menu.tip'|translate}}</h3>
+  <div class="modal-body">
+    <clr-icon shape="success-standard" class="is-solid" style="color: #59A220;margin-right: 5px;"></clr-icon>{{'rdm.rdmSuccessMsg'|translate}}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="rdmSuccess=false;this.closeWin();">{{'menu.ok'|translate}}</button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="rdmError" [clrModalSize]="'sm'">
+  <h3 class="modal-title">{{'menu.tip'|translate}}</h3>
+  <div class="modal-body">
+    <clr-icon shape="error-standard" class="is-solid" style="color: red;margin-right: 5px;"></clr-icon>{{'rdm.createRdmError'|translate}}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="rdmError=false">{{'menu.ok'|translate}}</button>
+  </div>
+</clr-modal>

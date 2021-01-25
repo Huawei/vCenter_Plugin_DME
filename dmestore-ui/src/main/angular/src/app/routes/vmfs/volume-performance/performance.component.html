@@ -1,0 +1,38 @@
+<div>
+  <form clrForm #simpleForm="ngForm">
+      <table class="searchtable" cellpadding="5" >
+        <tr>
+          <td>
+            <clr-select-container>
+              <select clrSelect (ngModelOptions)="volNames" [(ngModel)]="selectVolName" name="defaultSelect" class="clr-select" (change)="changeVolFunc()">
+                <option *ngFor="let item of volNames" value="{{item}}">{{item}}</option>
+              </select>
+            </clr-select-container>
+          </td>
+<!--          <td *ngIf="selectRange === 'BEGIN_END_TIME'">-->
+<!--            <mat-form-field appearance="fill">-->
+<!--              <mat-label>{{'vmfs.timeInputTips' | translate}}</mat-label>-->
+<!--              <mat-date-range-input [formGroup]="rangeTime" [rangePicker]="picker">-->
+<!--                <input required matStartDate  formControlName="start" placeholder="Start date" (dateChange)="changeDate();">-->
+<!--                <input required matEndDate formControlName="end" placeholder="End date" (dateChange)="changeDate();">-->
+<!--              </mat-date-range-input>-->
+<!--              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+<!--              <mat-date-range-picker #picker></mat-date-range-picker>-->
+<!--              <mat-error *ngIf="rangeTime.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>-->
+<!--              <mat-error *ngIf="rangeTime.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>-->
+<!--            </mat-form-field>-->
+<!--          </td>-->
+          <td>
+            <clr-select-container>
+              <select clrSelect (ngModelOptions)="ranges" [(ngModel)]="selectRange" name="selectRange" class="clr-select" (change)="changeVolFunc()" required>
+                <option *ngFor="let item of ranges" value="{{item.key}}">{{item.value}}</option>
+              </select>
+            </clr-select-container>
+          </td>
+        </tr>
+      </table>
+  </form>
+  <div echarts [options]="iopsChart" id="iopsChart" style="height: 600px;"></div>
+  <div echarts [options]="bandwidthChart" id="bandwidthChart" style="height: 600px;"></div>
+  <div echarts [options]="latencyChart" id="latencyChart" style="height: 600px;"></div>
+</div>

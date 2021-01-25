@@ -1,0 +1,5 @@
+import { css } from 'lit-element';
+/* @internal */
+export const styles = css `:host{font-family:inherit;font-size:inherit;color:inherit;--border-color: hsl(0, 0%, 80%);--background: hsl(0, 0%, 80%);--color: hsl(0, 0%, 18%)}.dropdown div{border:1px solid var(--border-color);padding:0.5rem;color:inherit;font-size:0.75rem}.dropdown .btn{background:var(--background);color:var(--color);border-radius:0.25rem;padding:0.5rem;font-family:inherit;font-size:1rem;cursor:pointer;height:auto}
+`;
+//# sourceMappingURL=test-dropdown.element.css.js.map

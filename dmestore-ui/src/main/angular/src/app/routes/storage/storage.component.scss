@@ -1,0 +1,17 @@
+.merginLeft{
+  margin-left: 20px;
+  border-style: solid;
+}
+.btn+.btn {
+  border-left: 0.05rem solid;
+}
+.color-square {
+  display: inline-block;
+  vertical-align: text-bottom;
+  height: .6rem;
+  width: .6rem;
+  border: .05rem solid #000;
+  border-radius: 2rem;
+  margin-bottom: 0.1rem;
+}
+

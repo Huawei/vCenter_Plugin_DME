@@ -1,0 +1,171 @@
+<div>
+  <!--plugin-->
+  <clr-modal [clrModalOpen]="viewPage=='mount_plugin'" [clrModalClosable]="false">
+    <h3 class="modal-title modelTile">{{'vmfs.mount.mount' | translate}}</h3>
+    <div class="modal-body">
+      <p *ngIf="errorMsg" style="color: red">{{'errorMsg.mountError' | translate}}</p>
+      <div *ngIf="modalLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+      </div>
+      <div *ngIf="modalHandleLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+      </div>
+      <form clrForm>
+        <!--<clr-radio-container clrInline>-->
+          <!--<label class="floatleft">{{'nfs.mount.mountObj' | translate}}</label>-->
+          <!--<clr-radio-wrapper>-->
+            <!--<input type="radio" clrRadio name="controlPolicy" value="1" [(ngModel)]="mountObj" ng-checked="true"/>-->
+            <!--<label>{{'nfs.mount.host' | translate}}</label>-->
+          <!--</clr-radio-wrapper>-->
+          <!--<clr-radio-wrapper>-->
+            <!--<input type="radio" clrRadio name="controlPolicy" value="2"  [(ngModel)]="mountObj" />-->
+            <!--<label>{{'nfs.mount.cluster' | translate}}</label>-->
+          <!--</clr-radio-wrapper>-->
+        <!--</clr-radio-container>-->
+        <!--主机-->
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.mountHost' | translate}}</label>
+          <select clrSelect (ngModelOptions)="hostList" [(ngModel)]="mountForm.hostObjectId"
+                  required name="hostObjectId" class="clr-select" (change)="checkHost()">
+            <option *ngFor="let item of hostList" value="{{item.hostId}}">{{item.hostName}}</option>
+          </select>
+        </clr-select-container>
+        <!--虚拟网卡IP-->
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.vkernel' | translate}}</label>
+          <select clrSelect (ngModelOptions)="vmkernelList" required [(ngModel)]="mountForm.hostVkernelIp" name="hostVkernelIp"
+                  class="clr-select">
+            <option *ngFor="let item of vmkernelList" value="{{item.ipAddress}}">{{item.ipAddress}}</option>
+          </select>
+        </clr-select-container>
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.mount.mountType' | translate}}</label>
+          <select clrSelect [(ngModel)]="mountForm.mountType" name="mountType">
+            <option value="readOnly">{{'nfs.mount.readOnly' | translate}}</option>
+            <option value="readWrite">{{'nfs.mount.readWrite' | translate}}</option>
+          </select>
+        </clr-select-container>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="backToNfsList()">{{'menu.cancel' | translate}}</button>
+      <button type="button" class="btn btn-primary" (click)="mountSubmit()">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+  <!--vcenter-datastore-->
+  <clr-modal  class="add-wizard-wrap" [clrModalOpen]="viewPage=='mount_dataStore'" [clrModalClosable]="false">
+    <div class="modal-body">
+      <form clrForm>
+        <p *ngIf="errorMsg" style="color: red">{{'errorMsg.mountError' | translate}}</p>
+        <div *ngIf="modalLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <div *ngIf="modalHandleLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <div *ngIf="modalLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <div *ngIf="modalHandleLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <!--主机-->
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.mountHost' | translate}}</label>
+          <select clrSelect (ngModelOptions)="hostList" [(ngModel)]="mountForm.hostObjectId"
+                  required name="hostObjectId" class="clr-select" (change)="checkHost()">
+            <option *ngFor="let item of hostList" value="{{item.hostId}}">{{item.hostName}}</option>
+          </select>
+        </clr-select-container>
+        <!--虚拟网卡IP-->
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.vkernel' | translate}}</label>
+          <select clrSelect (ngModelOptions)="vmkernelList" required [(ngModel)]="mountForm.hostVkernelIp" name="hostVkernelIp"
+                  class="clr-select">
+            <option *ngFor="let item of vmkernelList" value="{{item.ipAddress}}">{{item.ipAddress}}</option>
+          </select>
+        </clr-select-container>
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.mount.mountType' | translate}}</label>
+          <select clrSelect [(ngModel)]="mountForm.mountType" name="mountType">
+            <option value="readOnly">{{'nfs.mount.readOnly' | translate}}</option>
+            <option value="readWrite">{{'nfs.mount.readWrite' | translate}}</option>
+          </select>
+        </clr-select-container>
+      </form>
+    </div>
+    <div style="float: right;" class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="closeModel()">{{'menu.cancel' | translate}}</button>
+      <button type="button" class="btn btn-primary" (click)="mountSubmit()">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+  <!--vcenter-host-->
+  <clr-modal  class="add-wizard-wrap" [clrModalOpen]="viewPage=='mount_host'" [clrModalClosable]="false">
+    <div class="modal-body">
+      <form clrForm>
+        <p *ngIf="errorMsg" style="color: red">{{'errorMsg.mountError' | translate}}</p>
+        <div *ngIf="modalLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <div *ngIf="modalHandleLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <!--虚拟网卡IP-->
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.vkernel' | translate}}</label>
+          <select clrSelect (ngModelOptions)="vmkernelList" required [(ngModel)]="mountForm.hostVkernelIp" name="hostVkernelIp"
+                  class="clr-select">
+            <option *ngFor="let item of vmkernelList" value="{{item.ipAddress}}">{{item.ipAddress}}</option>
+          </select>
+        </clr-select-container>
+        <!--data store-->
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.nfsStore' | translate}}</label>
+          <select clrSelect (ngModelOptions)="dataStoreList" required [(ngModel)]="mountForm.dataStoreObjectId" name="dataStoreObjectId"
+                  class="clr-select">
+            <option *ngFor="let item of dataStoreList" value="{{item.objectId}}">{{item.name}}</option>
+          </select>
+        </clr-select-container>
+        <clr-select-container class="selectClass">
+          <label>{{'nfs.mount.mountType' | translate}}</label>
+          <select clrSelect [(ngModel)]="mountForm.mountType" name="mountType">
+            <option value="readOnly">{{'nfs.mount.readOnly' | translate}}</option>
+            <option value="readWrite">{{'nfs.mount.readWrite' | translate}}</option>
+          </select>
+        </clr-select-container>
+      </form>
+    </div>
+    <div style="float: right;" class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="closeModel()">{{'menu.cancel' | translate}}</button>
+      <button type="button" class="btn btn-primary" (click)="mountSubmit()">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+
+
+  <!--操作成功提示-->
+  <clr-modal [(clrModalOpen)]="mountSuccessShow" [clrModalSize]="'sm'" [clrModalClosable]="false">
+    <h3 class="modal-title modelTile">{{'vmfs.reclaim.title' | translate}}</h3>
+    <div class="modal-body">
+      <p *ngIf="mountSuccessShow">{{'vmfs.mount.success' | translate}}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" (click)="mountSuccessShow = false;confirmActResult();">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+</div>

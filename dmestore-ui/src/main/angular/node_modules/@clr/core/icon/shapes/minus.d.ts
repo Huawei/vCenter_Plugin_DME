@@ -1,0 +1,3 @@
+import { IconShapeTuple } from '../interfaces/icon.interfaces.js';
+export declare const minusIconName = "minus";
+export declare const minusIcon: IconShapeTuple;

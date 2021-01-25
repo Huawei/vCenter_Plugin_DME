@@ -1,0 +1,13 @@
+.color-square {
+  display: inline-block;
+  vertical-align: text-bottom;
+  height: .7rem;
+  width: .7rem;
+  border: .05rem solid #000;
+  border-radius: .2rem;
+}
+
+
+::ng-deep .clr-select-wrapper select{
+  width: 200px;
+}

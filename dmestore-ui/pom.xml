@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.huawei.dmestore</groupId>
+        <artifactId>dmerelease</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
+    <artifactId>dmestore-ui</artifactId>
+    <name>dmestore-ui</name>
+    <url>http://maven.apache.org</url>
+    <version>0.0.2-SNAPSHOT</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+    <build>
+        <finalName>dmestore-ui</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+
+                <configuration>
+                    <archive>
+                        <manifestFile>src/main/webapp/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+
+            </plugin>
+            <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>1.10.3</version>
+            <configuration>
+                <workingDirectory>src/main/angular</workingDirectory>
+                <nodeVersion>v14.10.1</nodeVersion>
+                <npmVersion>6.14.8</npmVersion>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>install node and npm</id>
+                    <goals>
+                        <goal>install-node-and-npm</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>npm install</id>
+                    <goals>
+                        <goal>npm</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>npm run build</id>
+                    <goals>
+                        <goal>npm</goal>
+                    </goals>
+                    <configuration>
+                        <arguments>run build:prod</arguments>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        </plugins>
+        <resources>
+           <!-- <resource>
+                <directory>${project.basedir}/target/frontend</directory>
+               <targetPath>${project.basedir}/target/dmestore-ui</targetPath>
+            </resource>-->
+        </resources>
+    </build>
+</project>

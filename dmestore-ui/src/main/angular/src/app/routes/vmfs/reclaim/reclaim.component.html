@@ -1,0 +1,32 @@
+<clr-modal class="add-wizard-wrap" [(clrModalOpen)]="reclaimShow" [clrModalSize]="'sm'" [clrModalClosable]="false">
+  <div class="modal-body">
+    <div *ngIf="isOperationErr" class="errorTips" readonly ><clr-icon shape="exclamation-circle" class="is-solid"></clr-icon>{{'errorMsg.reclaimError' | translate}}</div>
+    <div *ngIf="isReclaimErr" class="errorTips" readonly ><clr-icon shape="exclamation-circle" class="is-solid"></clr-icon>{{'vmfs.reclaim.error' | translate}}</div>
+    <div *ngIf="modalHandleLoading" class="loadingDiv">
+        <span>
+          {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+        </span>
+    </div>
+    <div *ngIf="modalLoading" class="loadingDiv">
+        <span>
+          {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+        </span>
+    </div>
+    <p>{{'vmfs.reclaim.content' | translate}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="cancel();">{{'menu.cancel' | translate}}</button>
+    <button type="button" class="btn btn-primary" [disabled]="isReclaimErr" (click)="reclaimHandleFunc()">{{'menu.ok' | translate}}</button>
+  </div>
+</clr-modal>
+<!--操作成功提示-->
+<clr-modal [(clrModalOpen)]="reclaimSuccessShow" [clrModalSize]="'sm'" [clrModalClosable]="false">
+  <h3 class="modal-title modelTile">{{'vmfs.reclaim.title' | translate}}</h3>
+  <div class="modal-body">
+    <p *ngIf="reclaimSuccessShow">{{'vmfs.reclaim.success' | translate}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" (click)="reclaimSuccessShow = false;confirmActResult();">{{'menu.ok' | translate}}</button>
+  </div>
+</clr-modal>
+

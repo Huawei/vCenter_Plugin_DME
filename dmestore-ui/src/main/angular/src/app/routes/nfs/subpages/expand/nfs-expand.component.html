@@ -1,0 +1,81 @@
+<div>
+  <clr-modal [clrModalOpen]="viewPage=='expand_plugin'" [clrModalClosable]="false">
+    <h3 class="modal-title">{{'menu.expand' | translate}}</h3>
+    <div class="modal-body">
+      <form  clrForm>
+        <p *ngIf="errorMsg" style="color: red">{{'errorMsg.expandError' | translate}}</p>
+        <div *ngIf="modalLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <div *ngIf="modalHandleLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <clr-input-container>
+          <label>{{'nfs.expandSize' | translate}}</label>
+          <div clrInput style="float: left;position: relative;">
+            <input clrInput style="width: 70%;border-bottom: none" type="number" min="0" [(ngModel)]="newCapacity" name="newCapacity" #number="ngModel"
+                   onkeyup="this.value.match(/\d+(\.\d{0,2})?/)? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''" required/>
+            <select class="capacity" [(ngModel)]="unit" clrInput style="width: 30%;border: 1px solid #DDDDDD;position: absolute;bottom: 3px;"  name="unit" >
+              <option value="TB">TB</option>
+              <option value="GB">GB</option>
+              <!--<option value="MB">MB</option>-->
+              <!--<option value="KB">KB</option>-->
+            </select>
+          </div>
+        </clr-input-container>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="backToNfsList()">{{'menu.cancel' | translate}}</button>
+      <button type="button" class="btn btn-primary" (click)="expandData()">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+  <clr-modal class="add-wizard-wrap" [clrModalOpen]="viewPage=='expand_vcenter'" [clrModalClosable]="false">
+    <div class="modal-body">
+      <form  clrForm>
+        <p *ngIf="errorMsg" style="color: red">{{'errorMsg.expandError' | translate}}</p>
+        <div *ngIf="modalLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.loadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <div *ngIf="modalHandleLoading" class="loadingDiv">
+      <span>
+        {{'vmfs.dataHandleLoadingTips' | translate}}<img src="./assets/images/loading.gif"  width="20px" height="20px" style="margin-left: 20px;">
+      </span>
+        </div>
+        <clr-input-container>
+          <label>{{'nfs.expandSize' | translate}}</label>
+          <div clrInput style="float: left;position: relative;">
+            <input clrInput style="width: 70%;border-bottom: none" type="number" min="0" [(ngModel)]="newCapacity" name="newCapacity" #number="ngModel"
+                   onkeyup="this.value.match(/\d+(\.\d{0,2})?/)? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''" required/>
+            <select class="capacity" [(ngModel)]="unit" clrInput style="width: 30%;border: 1px solid #DDDDDD;position: absolute;bottom: 3px;"  name="unit" >
+              <option value="TB">TB</option>
+              <option value="GB">GB</option>
+              <!--<option value="MB">MB</option>-->
+              <!--<option value="KB">KB</option>-->
+            </select>
+          </div>
+        </clr-input-container>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="closeModel()">{{'menu.cancel' | translate}}</button>
+      <button type="button" class="btn btn-primary" (click)="expandData()">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+  <!--操作成功提示-->
+  <clr-modal [(clrModalOpen)]="expandSuccessShow" [clrModalSize]="'sm'" [clrModalClosable]="false">
+    <h3 class="modal-title modelTile">{{'vmfs.reclaim.title' | translate}}</h3>
+    <div class="modal-body">
+      <p *ngIf="expandSuccessShow">{{'vmfs.expand.success' | translate}}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" (click)="expandSuccessShow = false;confirmActResult();">{{'menu.ok' | translate}}</button>
+    </div>
+  </clr-modal>
+</div>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+<bean name="context" class="com.vmware.vim.vmomi.core.types.impl.VmodlContextLoader">
+   <property name="vmodlTypeContext">
+      <list>
+         <value>com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager</value>
+         <value>com.vmware.vim.binding.vmodl.reflect.ManagedMethodExecuter</value>
+      </list>
+   </property>
+   <property name="vmodlDataObjects">
+      <map>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$MoFilterSpec" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$MoFilterSpec"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.ManagedMethodExecuter$SoapFault" value="com.vmware.vim.binding.vmodl.reflect.ManagedMethodExecuter$SoapFault"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$DataTypeInfo" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$DataTypeInfo"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$TypeFilterSpec" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$TypeFilterSpec"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$PropertyTypeInfo" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$PropertyTypeInfo"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$ParamTypeInfo" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$ParamTypeInfo"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$EnumTypeInfo" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$EnumTypeInfo"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$MoInstance" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$MoInstance"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$ManagedTypeInfo" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$ManagedTypeInfo"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$MethodTypeInfo" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$MethodTypeInfo"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$AllTypeInfo" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$AllTypeInfo"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$Annotation" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$Annotation"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.ManagedMethodExecuter$SoapResult" value="com.vmware.vim.binding.vmodl.reflect.ManagedMethodExecuter$SoapResult"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.ManagedMethodExecuter$SoapArgument" value="com.vmware.vim.binding.vmodl.reflect.ManagedMethodExecuter$SoapArgument"/>
+         <entry key="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$FilterSpec" value="com.vmware.vim.binding.vmodl.reflect.DynamicTypeManager$FilterSpec"/>
+      </map>
+   </property>
+   <property name="vmodlVersionContext">
+      <list>
+         <value>com.vmware.vim.binding.vmodl.reflect.version.internal.version1</value>
+         <value>com.vmware.vim.binding.vmodl.reflect.version.internal.version2</value>
+         <value>com.vmware.vim.binding.vmodl.reflect.version.version1</value>
+         <value>com.vmware.vim.binding.vmodl.reflect.version.version2</value>
+      </list>
+   </property>
+</bean>
+</beans>
