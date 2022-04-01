@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -111,7 +112,7 @@ public class DmeAccessServiceImplTest {
         params.put("hostIp", hostIp);
         params.put("hostPort", hostPort);
         HttpHeaders headers = getHeaders(null);
-        Map<String, Object> requestbody = new HashMap<>(16);
+        Map<String, Object> requestbody = new LinkedHashMap<>(16);
         requestbody.put("grantType", "password");
         requestbody.put("userName", userName);
         requestbody.put("value", password);
@@ -304,13 +305,13 @@ public class DmeAccessServiceImplTest {
         hbamap.put("name", "tes");
         when(vcsdkUtils.getHbaByHostObjectId(hostId)).thenReturn(hbamap);
 
-        Map requestbody = new HashMap<>(16);
+        Map requestbody = new LinkedHashMap<>(16);
         requestbody.put("access_mode", "NONE");
         requestbody.put("type", "VMWAREESX");
         requestbody.put("ip", host);
         requestbody.put("host_name", host);
         List<Map<String, Object>> initiators = new ArrayList<>();
-        Map<String, Object> initiator = new HashMap<>(16);
+        Map<String, Object> initiator = new LinkedHashMap<>(16);
         initiator.put("protocol", hbamap.get("type"));
         initiator.put("port_name", hbamap.get("name"));
         initiators.add(initiator);
@@ -336,7 +337,7 @@ public class DmeAccessServiceImplTest {
     public void testCreateHostGroup() throws Exception {
         String hostId = "1456";
         String host = "10.143.132.17";
-        Map requestbody = new HashMap<>(16);
+        Map requestbody = new LinkedHashMap<>(16);
         requestbody.put("name", host);
         requestbody.put("host_ids", hostId);
         Map<String, Object> params = new HashMap<>(16);
