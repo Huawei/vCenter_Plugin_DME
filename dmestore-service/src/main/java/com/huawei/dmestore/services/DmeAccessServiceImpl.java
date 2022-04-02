@@ -32,6 +32,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -258,7 +259,7 @@ public class DmeAccessServiceImpl implements DmeAccessService {
         dmeToken = null;
         if (params != null && params.get(DmeConstants.HOSTIP) != null) {
             HttpHeaders headers = getHeaders();
-            Map<String, Object> requestbody = new HashMap<>(DmeConstants.COLLECTION_CAPACITY_16);
+            Map<String, Object> requestbody = new LinkedHashMap<>(DmeConstants.COLLECTION_CAPACITY_16);
             requestbody.put("grantType", PASSWORD);
             requestbody.put(USER_NAME, params.get(USER_NAME));
             requestbody.put("value", params.get(PASSWORD));
@@ -488,11 +489,11 @@ public class DmeAccessServiceImpl implements DmeAccessService {
                 // 得到主机的hba信息
                 Map<String, Object> hbamap = vcsdkUtils.getHbaByHostObjectId(ToolUtils.getStr(params.get("hostId")));
                 List<Map<String, Object>> initiators = new ArrayList<>();
-                Map<String, Object> initiator = new HashMap<>(DmeConstants.COLLECTION_CAPACITY_16);
+                Map<String, Object> initiator = new LinkedHashMap<>(DmeConstants.COLLECTION_CAPACITY_16);
                 initiator.put(PROTOCOL, ToolUtils.getStr(hbamap.get(TYPE_FIELD)));
                 initiator.put(PORT_NAME, ToolUtils.getStr(hbamap.get(NAME_FIELD)));
                 initiators.add(initiator);
-                Map<String, Object> requestbody = new HashMap<>(DmeConstants.COLLECTION_CAPACITY_16);
+                Map<String, Object> requestbody = new LinkedHashMap<>(DmeConstants.COLLECTION_CAPACITY_16);
                 requestbody.put(ACCESS_MODE_FIELD, "NONE");
                 requestbody.put(TYPE_FIELD, "VMWAREESX");
                 requestbody.put(IP_FIELD, params.get("host"));
@@ -527,7 +528,7 @@ public class DmeAccessServiceImpl implements DmeAccessService {
             if (params != null && params.get(DmeConstants.CLUSTER) != null
                 && params.get(DmeConstants.HOSTIDS) != null) {
                 // 判断该集群下有多少主机，如果主机在DME不存在就需要创建
-                requestbody = new HashMap<>(DmeConstants.COLLECTION_CAPACITY_16);
+                requestbody = new LinkedHashMap<>(DmeConstants.COLLECTION_CAPACITY_16);
                 requestbody.put(NAME_FIELD, params.get("cluster").toString());
                 requestbody.put("host_ids", params.get("hostids"));
 
