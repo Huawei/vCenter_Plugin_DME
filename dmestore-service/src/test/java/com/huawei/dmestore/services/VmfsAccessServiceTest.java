@@ -31,6 +31,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -432,7 +433,7 @@ public class VmfsAccessServiceTest {
         String listStr1 = gson.toJson(clusters);
         when(vcsdkUtils.getMountClustersByDsObjectId(dataStoreId, mappeddmegroups)).thenReturn(listStr1);
         String unmappingUrl = "/rest/blockservice/v1/volumes/host-unmapping";
-        Map<String, Object> requestbody = new HashMap<>();
+        Map<String, Object> requestbody = new LinkedHashMap<>();
         requestbody.put("host_id", hostId);
         requestbody.put("volume_ids", volumeIds);
         ResponseEntity responseEntity1 = new ResponseEntity(taskStr, null, HttpStatus.ACCEPTED);

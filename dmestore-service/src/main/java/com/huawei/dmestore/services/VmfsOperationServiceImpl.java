@@ -23,6 +23,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -178,7 +179,7 @@ public class VmfsOperationServiceImpl implements VmfsOperationService {
 
     @Override
     public void expandVmfs(Map<String, String> volumemap) throws DmeException {
-        Map<String, Object> reqBody = new HashMap<>(DEFAULT_CAPACITY);
+        Map<String, Object> reqBody = new LinkedHashMap<>(DEFAULT_CAPACITY);
         List<String> volumeIds = new ArrayList<>(DEFAULT_CAPACITY);
 
         String volumeId = volumemap.get("volume_id");

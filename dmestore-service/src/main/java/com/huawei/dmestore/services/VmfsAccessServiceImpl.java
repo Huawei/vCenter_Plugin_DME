@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -1705,7 +1706,7 @@ public class VmfsAccessServiceImpl implements VmfsAccessService {
     private ResponseEntity hostUnmapping(Map<String, Object> params) throws DmeException {
         String hostId = ToolUtils.getStr(params.get(HOST_ID));
         Object volumeIds = params.get(VOLUMEIDS);
-        Map<String, Object> requestbody = new HashMap<>();
+        Map<String, Object> requestbody = new LinkedHashMap<>();
         requestbody.put(HOST_ID, hostId);
         requestbody.put(VOLUME_IDS, volumeIds);
         ResponseEntity responseEntity = dmeAccessService.access(DmeConstants.DME_HOST_UNMAPPING_URL, HttpMethod.POST,
